@@ -1,0 +1,3094 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="briefing">
+  <title>Evaluasi Tes Formatif BMP Pancasila (Modul 1–6)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #faf9f5;
+      --surface-container-low: #ffffff;
+      --surface-container: #f1efe8;
+      --surface-container-high: #e6e2d6;
+      --on-surface: #17181a;
+      --on-surface-variant: #56585c;
+      --outline: #17181a;
+      --outline-variant: #dedad0;
+      --primary: #17181a;
+      --on-primary: #faf9f5;
+      --primary-container: #f2b705;
+      --on-primary-container: #17181a;
+      --secondary: #1f4e5f;
+      --tertiary: #785008;
+      --error: #b42318;
+      --on-error: #ffffff;
+      --error-bg: #fef3f2;
+      --positive: #1b6b46;
+      --positive-bg: #ecfdf3;
+      --warning: #b45309;
+      --warning-bg: #fffbeb;
+      --focus: #1f4e5f;
+
+      --data-1: #1f4e5f;
+      --data-2: #d99000;
+      --data-3: #2b6e52;
+      --data-4: #b84a39;
+      --data-context: #c4bfb2;
+
+      --font-headline: 'Source Serif 4', serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-label: 'Geist Mono', monospace;
+
+      --rounded: 0.25rem;
+      --rounded-lg: 0.375rem;
+      --rounded-full: 0.25rem;
+
+      --section-rule: 1.5px solid var(--outline);
+      --card-border: 1px solid var(--outline-variant);
+      --badge-radius: 2px;
+      --heading-tracking: -0.02em;
+      --label-tracking: 0.08em;
+
+      --display-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+      --headline-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+    }
+    header { position: static !important; }
+
+    button, input, select {
+      font-family: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Sticky Top-Center Timer Bar */
+    .timer-dock {
+      position: fixed;
+      top: var(--space-sm);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: min(calc(100% - 1rem), 620px);
+      background: var(--surface-container-low);
+      border: var(--section-rule);
+      border-radius: var(--rounded-lg);
+      box-shadow: 0 6px 20px rgba(23, 24, 26, 0.12);
+      padding: var(--space-xs) var(--space-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .timer-status {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-width: 0;
+    }
+
+    .timer-badge {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: 0.6875rem;
+      letter-spacing: var(--label-tracking);
+      text-transform: uppercase;
+      padding: 0.2rem 0.45rem;
+      border-radius: var(--badge-radius);
+      white-space: nowrap;
+    }
+    .timer-badge.is-running {
+      background: var(--secondary);
+      color: var(--on-primary);
+    }
+    .timer-badge.is-finished {
+      background: var(--positive);
+      color: var(--on-primary);
+    }
+    .timer-badge.is-warning {
+      background: var(--error);
+      color: var(--on-error);
+    }
+
+    .timer-clock {
+      font-family: var(--font-label);
+      font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.04em;
+      color: var(--on-surface);
+    }
+
+    .timer-meta {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      white-space: nowrap;
+    }
+
+    .timer-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: 0 var(--space-md);
+      border-radius: var(--rounded);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  color var(--dur-micro) var(--ease-out),
+                  border-color var(--dur-micro) var(--ease-out);
+      white-space: nowrap;
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--secondary);
+    }
+    .btn-secondary {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border-color: var(--outline-variant);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--surface-container);
+      border-color: var(--outline);
+    }
+    .btn-icon {
+      min-width: 44px;
+      padding: 0 var(--space-sm);
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: var(--space-xl);
+      padding: calc(76px + var(--space-lg)) var(--space-lg) var(--space-2xl);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .page-grid * { min-width: 0; }
+
+    .main-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .side-col {
+      position: sticky;
+      top: 84px;
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    /* Editorial Dossier Masthead */
+    .dossier-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+      border-bottom: var(--section-rule);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .dossier-pill {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.6875rem;
+      letter-spacing: var(--label-tracking);
+      text-transform: uppercase;
+      padding: 0.1875rem 0.5rem;
+      border-radius: var(--badge-radius);
+    }
+    .dossier-meta {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      text-transform: uppercase;
+    }
+
+    .title {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 600;
+      letter-spacing: var(--heading-tracking);
+      line-height: 1.08;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .standfirst {
+      font-family: var(--font-body);
+      font-size: var(--subhead-size);
+      font-weight: 600;
+      color: var(--secondary);
+      margin: var(--space-xs) 0 0;
+      max-width: 65ch;
+    }
+    .intro-note {
+      margin: var(--space-sm) 0 0;
+      color: var(--on-surface-variant);
+      max-width: 65ch;
+      font-size: 0.9375rem;
+    }
+
+    /* Module Filter Bar */
+    .filter-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      padding: var(--space-sm) 0;
+      border-top: var(--card-border);
+      border-bottom: var(--card-border);
+    }
+    .filter-btn {
+      min-height: 44px;
+      padding: 0 var(--space-sm);
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  color var(--dur-micro) var(--ease-out),
+                  border-color var(--dur-micro) var(--ease-out);
+    }
+    .filter-btn:hover {
+      background: var(--surface-container);
+      color: var(--on-surface);
+    }
+    .filter-btn.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    /* Summary Result Panel (Hidden until finished) */
+    .result-panel {
+      background: var(--surface-container-low);
+      border: var(--section-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: none;
+    }
+    .result-panel.is-visible {
+      display: block;
+    }
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+    .figure-card {
+      background: var(--surface-container);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+    }
+    .figure-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .figure-value {
+      font-family: var(--font-headline);
+      font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      margin-top: var(--space-xs);
+      color: var(--on-surface);
+    }
+    .figure-sub {
+      font-size: 0.8125rem;
+      color: var(--secondary);
+      font-weight: 600;
+      margin-top: var(--space-xs);
+    }
+
+    .module-breakdown {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--space-lg);
+      font-size: 0.875rem;
+    }
+    .module-breakdown th {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      text-align: left;
+      padding: var(--space-sm);
+      border-bottom: var(--section-rule);
+      color: var(--on-surface-variant);
+    }
+    .module-breakdown td {
+      padding: var(--space-sm);
+      border-bottom: var(--card-border);
+      font-variant-numeric: tabular-nums;
+    }
+    .module-breakdown td.num, .module-breakdown th.num {
+      text-align: right;
+    }
+
+    /* Section Header */
+    .module-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .module-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      border-bottom: var(--section-rule);
+      padding-bottom: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+    .module-title {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: var(--heading-tracking);
+    }
+    .module-tag {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--secondary);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Question Card */
+    .q-card {
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      transition: border-color var(--dur-short) var(--ease-out);
+    }
+    .q-card.is-answered {
+      border-color: var(--secondary);
+    }
+    .q-card.is-correct {
+      border-color: var(--positive);
+    }
+    .q-card.is-wrong {
+      border-color: var(--error);
+    }
+
+    .q-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+    .q-index {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .q-badge {
+      font-family: var(--font-label);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--badge-radius);
+      text-transform: uppercase;
+    }
+    .q-badge-trigger {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .q-badge-correct {
+      background: var(--positive-bg);
+      color: var(--positive);
+    }
+    .q-badge-wrong {
+      background: var(--error-bg);
+      color: var(--error);
+    }
+    .q-badge-unanswered {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .q-stem {
+      font-weight: 500;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-md);
+      max-width: 65ch;
+      white-space: pre-line;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .opt-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      width: 100%;
+      min-height: 44px;
+      text-align: left;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      color: var(--on-surface);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out),
+                  border-color var(--dur-micro) var(--ease-out),
+                  box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .opt-btn:hover:not(:disabled) {
+      background: var(--surface-container);
+      border-color: var(--outline);
+    }
+    .opt-btn.is-selected {
+      background: var(--surface-container-high);
+      border-color: var(--primary);
+      box-shadow: inset 3px 0 0 var(--primary);
+      font-weight: 600;
+    }
+    .opt-btn.is-correct-opt {
+      background: var(--positive-bg);
+      border-color: var(--positive);
+      box-shadow: inset 3px 0 0 var(--positive);
+    }
+    .opt-btn.is-wrong-opt {
+      background: var(--error-bg);
+      border-color: var(--error);
+      box-shadow: inset 3px 0 0 var(--error);
+    }
+    .opt-btn:disabled {
+      cursor: default;
+    }
+
+    .opt-letter {
+      font-family: var(--font-label);
+      font-weight: 600;
+      min-width: 1.5rem;
+      color: var(--secondary);
+    }
+
+    /* Explanation Box (Only created/shown after Selesai) */
+    .exp-box {
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px dashed var(--outline-variant);
+    }
+    .exp-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: var(--space-sm);
+    }
+    .exp-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .exp-item {
+      font-size: 0.875rem;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      background: var(--surface-container);
+      line-height: 1.5;
+    }
+    .exp-item.is-key {
+      background: var(--positive-bg);
+      border-left: 3px solid var(--positive);
+    }
+    .exp-item strong {
+      font-family: var(--font-label);
+      margin-right: var(--space-xs);
+    }
+
+    /* Sidebar */
+    .aside-box {
+      background: var(--surface-container);
+      border-top: var(--section-rule);
+      border-radius: 0 0 var(--rounded-lg) var(--rounded-lg);
+      padding: var(--space-md);
+    }
+    .aside-title {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: var(--label-tracking);
+      color: var(--on-surface);
+      margin: 0 0 var(--space-sm);
+    }
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-xs);
+      max-height: 360px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+    .nav-dot {
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      background: var(--surface-container-low);
+      border: var(--card-border);
+      border-radius: var(--rounded);
+      color: var(--on-surface-variant);
+      cursor: pointer;
+    }
+    .nav-dot.is-answered {
+      background: var(--secondary);
+      color: var(--on-primary);
+      border-color: var(--secondary);
+    }
+    .nav-dot.is-correct {
+      background: var(--positive);
+      color: var(--on-primary);
+      border-color: var(--positive);
+    }
+    .nav-dot.is-wrong {
+      background: var(--error);
+      color: var(--on-error);
+      border-color: var(--error);
+    }
+
+    .progress-bar-wrap {
+      height: 6px;
+      background: var(--surface-container-high);
+      border-radius: var(--rounded);
+      overflow: hidden;
+      margin: var(--space-sm) 0;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--secondary);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    .bottom-finish-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      background: var(--surface-container);
+      border-top: var(--section-rule);
+      padding: var(--space-lg);
+      border-radius: var(--rounded-lg);
+    }
+
+    .inline-status {
+      font-size: 0.875rem;
+      color: var(--secondary);
+      font-weight: 600;
+      margin-top: var(--space-xs);
+    }
+
+    @media (max-width: 900px) {
+      .page-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .side-col {
+        position: static;
+        order: -1;
+      }
+      .nav-grid {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        max-height: 180px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .timer-dock {
+        padding: var(--space-xs) var(--space-sm);
+      }
+      .timer-meta {
+        display: none;
+      }
+      .page-grid {
+        padding: calc(72px + var(--space-md)) var(--space-sm) var(--space-xl);
+      }
+      .q-card {
+        padding: var(--space-md);
+      }
+      .nav-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Top-Center 90-Minute Countdown Timer Bar -->
+  <div class="timer-dock" role="region" aria-label="Pengatur Waktu Ujian">
+    <div class="timer-status">
+      <span id="timer-badge" class="timer-badge">SIAP</span>
+      <span id="timer-clock" class="timer-clock" aria-live="off">90:00</span>
+      <span id="timer-progress-text" class="timer-meta">0/114 terjawab</span>
+    </div>
+    <div class="timer-actions">
+      <button type="button" id="btn-sound" class="btn btn-secondary btn-icon" onclick="toggleSound()" aria-label="Aktifkan atau matikan suara detak jam" title="Suara detak jarum jam">
+        <span id="sound-icon" aria-hidden="true">🔊</span>
+      </button>
+      <button type="button" id="btn-finish-top" class="btn btn-primary" onclick="finishExam()">Selesai</button>
+    </div>
+  </div>
+
+  <div class="page-grid">
+    <main class="main-col">
+      <!-- Masthead -->
+      <section aria-labelledby="page-title">
+        <div class="dossier-bar">
+          <span class="dossier-pill">MKWN4110 · BMP PANCASILA</span>
+          <span class="dossier-meta">TES FORMATIF LENGKAP · MODUL 1–6 · WAKTU 90 MENIT</span>
+        </div>
+        <h1 id="page-title" class="title">Latihan Terpadu Tes Formatif Pendidikan Pancasila</h1>
+        <p class="standfirst">Seluruh butir soal Tes Formatif Kegiatan Belajar 1 dan 2 dari Modul 1 hingga Modul 6 dalam satu sesi evaluasi terukur.</p>
+        <p class="intro-note">Pilih jawaban pada <strong>Soal 1</strong> (atau soal pertama yang Anda kerjakan) untuk memulai hitung mundur 90 menit dan suara detak jarum jam secara otomatis. Kunci jawaban beserta pembahasan lengkap setiap opsi hanya terbuka setelah Anda menekan tombol <strong>Selesai</strong>.</p>
+      </section>
+
+      <!-- Score Summary Panel (Unlocked on Selesai) -->
+      <section id="result-panel" class="result-panel" aria-live="polite">
+        <div class="dossier-bar">
+          <span class="dossier-pill">HASIL EVALUASI</span>
+          <span id="result-timestamp" class="dossier-meta">TES SELESAI</span>
+        </div>
+        <h2 class="module-title">Rekapitulasi Penguasaan Materi BMP Pancasila</h2>
+        <div class="result-grid">
+          <div class="figure-card">
+            <div class="figure-label">Tingkat Penguasaan</div>
+            <div id="res-percent" class="figure-value">0%</div>
+            <div id="res-predicate" class="figure-sub">—</div>
+          </div>
+          <div class="figure-card">
+            <div class="figure-label">Jawaban Benar</div>
+            <div id="res-correct" class="figure-value">0 / 114</div>
+            <div id="res-answered" class="figure-sub">0 terjawab</div>
+          </div>
+          <div class="figure-card">
+            <div class="figure-label">Sisa Waktu</div>
+            <div id="res-time" class="figure-value">90:00</div>
+            <div id="res-duration" class="figure-sub">Durasi: 00:00</div>
+          </div>
+        </div>
+        <table class="module-breakdown">
+          <thead>
+            <tr>
+              <th>Modul</th>
+              <th class="num">Benar</th>
+              <th class="num">Total</th>
+              <th class="num">Penguasaan</th>
+              <th>Kategori</th>
+            </tr>
+          </thead>
+          <tbody id="res-breakdown-body"></tbody>
+        </table>
+      </section>
+
+      <!-- Module Filter Tabs -->
+      <nav class="filter-strip" aria-label="Filter Modul">
+        <button type="button" class="filter-btn is-active" data-filter="all" onclick="setModuleFilter('all')">Semua Modul (114)</button>
+        <button type="button" class="filter-btn" data-filter="1" onclick="setModuleFilter('1')">Modul 1 (30)</button>
+        <button type="button" class="filter-btn" data-filter="2" onclick="setModuleFilter('2')">Modul 2 (17)</button>
+        <button type="button" class="filter-btn" data-filter="3" onclick="setModuleFilter('3')">Modul 3 (18)</button>
+        <button type="button" class="filter-btn" data-filter="4" onclick="setModuleFilter('4')">Modul 4 (17)</button>
+        <button type="button" class="filter-btn" data-filter="5" onclick="setModuleFilter('5')">Modul 5 (14)</button>
+        <button type="button" class="filter-btn" data-filter="6" onclick="setModuleFilter('6')">Modul 6 (18)</button>
+      </nav>
+
+      <!-- Questions Container -->
+      <div id="questions-container"></div>
+
+      <!-- Bottom Action Bar -->
+      <div class="bottom-finish-bar">
+        <div>
+          <strong id="bottom-status-title">Siap mengakhiri tes?</strong>
+          <div id="bottom-status-desc" class="inline-status">Tekan Selesai untuk menghentikan timer dan membuka seluruh kunci jawaban serta pembahasan opsi.</div>
+        </div>
+        <div style="display:flex; gap:var(--space-sm); flex-wrap:wrap;">
+          <button type="button" id="btn-reset" class="btn btn-secondary" onclick="handleReset(this)">Ulangi Tes</button>
+          <button type="button" id="btn-finish-bottom" class="btn btn-primary" onclick="finishExam()">Selesai &amp; Buka Kunci Jawaban</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Sidebar Navigator -->
+    <aside class="side-col" aria-label="Navigasi Soal">
+      <div class="aside-box">
+        <h2 class="aside-title">Progres Pengerjaan</h2>
+        <div style="display:flex; justify-content:space-between; font-size:0.875rem; font-weight:600;">
+          <span id="side-progress-label">0 dari 114 soal</span>
+          <span id="side-progress-pct" style="font-family:var(--font-label); color:var(--secondary);">0%</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div id="side-progress-fill" class="progress-bar-fill"></div>
+        </div>
+        <p style="font-size:0.8125rem; color:var(--on-surface-variant); margin:0;">
+          Standar ketuntasan modul BMP UT: tingkat penguasaan &ge; 80% (kategori Baik / Baik Sekali).
+        </p>
+      </div>
+
+      <div class="aside-box">
+        <h2 class="aside-title">Peta Nomor Soal</h2>
+        <div id="nav-grid" class="nav-grid"></div>
+      </div>
+    </aside>
+  </div>
+
+  <api-shim></api-shim>
+  <script>
+    const MODULE_TITLES = {
+      1: `Modul 1 — Pengantar Pendidikan Pancasila`,
+      2: `Modul 2 — Mengenal Pancasila dalam Konteks Historis`,
+      3: `Modul 3 — Pancasila sebagai Dasar Falsafah Negara`,
+      4: `Modul 4 — Pancasila sebagai Ideologi Bangsa dan Negara`,
+      5: `Modul 5 — Pancasila sebagai Sistem Filsafat`,
+      6: `Modul 6 — Pancasila sebagai Paradigma Pengembangan Ilmu dan Pembangunan Nasional`
+    };
+
+    // Seluruh butir soal dari Modul 1 s.d. Modul 6 berdasarkan bahan ajar BMP MKWN4110
+    const QUESTIONS = [
+      // ================= MODUL 1 - TES FORMATIF 1 (1-15) =================
+      {
+        m: 1, kb: 1, no: 1,
+        q: `Bagian dari Pengantar Pendidikan Pancasila adalah ....`,
+        opts: [`Apa itu Pancasila?`, `Ada apa dengan Pancasila?`, `Di mana Pancasila?`, `Filsafat Pancasila`],
+        ans: 0,
+        exp: [
+          `BENAR. Dalam Modul 1 KB 1, subbahasan pengenalan meliputi Pengantar Pendidikan Pancasila, "Apa itu Pancasila?", Mulai dari Mana Belajar Pancasila, dan Dinamika dalam Memahami Pancasila.`,
+          `SALAH. "Ada apa dengan Pancasila?" bukan bagian dari struktur pokok bahasan Modul 1 KB 1.`,
+          `SALAH. "Di mana Pancasila?" tidak tercantum sebagai subpokok bahasan dalam Modul 1.`,
+          `SALAH. Filsafat Pancasila dibahas tersendiri pada Modul 5 (Pancasila sebagai Sistem Filsafat), bukan subbagian pengantar KB 1.`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 2,
+        q: `Kata "Pancasila" berasal dari bahasa ....`,
+        opts: [`Jawa Kuno`, `Sanskerta`, `Melayu`, `Hindia Belanda`],
+        ans: 1,
+        exp: [
+          `SALAH. Bahasa Jawa Kuno mengenal istilah tersebut melalui kitab Sutasoma/Negarakertagama, namun asal etimologis kata "Pancasila" adalah bahasa Sanskerta.`,
+          `BENAR. Sesuai Subbab B Modul 1 KB 1, kata "Pancasila" berasal dari bahasa Sanskerta: "panca" (lima) dan "sila" (prinsip atau asas).`,
+          `SALAH. Bahasa Melayu bukan bahasa asal mula kata majemuk "panca" dan "sila".`,
+          `SALAH. Istilah Hindia Belanda adalah istilah administratif kolonial, bukan asal bahasa kata Pancasila.`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 3,
+        q: `Panca berarti ....`,
+        opts: [`empat`, `lima`, `tiga`, `dua`],
+        ans: 1,
+        exp: [
+          `SALAH. Dalam bahasa Sanskerta, empat disebut "catur".`,
+          `BENAR. "Panca" berasal dari bahasa Sanskerta yang berarti lima.`,
+          `SALAH. Tiga dalam bahasa Sanskerta adalah "tri" (seperti pada Trisila).`,
+          `SALAH. Dua dalam bahasa Sanskerta adalah "dwi" (seperti pada dwi-tunggal).`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 4,
+        q: `Pancasila berarti lima ....`,
+        opts: [`butir`, `asas`, `hukum`, `aturan`],
+        ans: 1,
+        exp: [
+          `SALAH. "Butir" merujuk pada rincian pengamalan (seperti butir P4), bukan arti kata "sila".`,
+          `BENAR. Kata "sila" berarti prinsip atau asas, sehingga Pancasila berarti lima prinsip dasar atau lima asas.`,
+          `SALAH. "Hukum" berarti aturan yang mengikat secara yuridis, bukan terjemahan langsung kata "sila".`,
+          `SALAH. "Aturan" bersifat teknis-operasional, sedangkan "sila" bermakna asas atau prinsip fundamental.`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 5,
+        q: `Contoh pengamalan sila ke-5 Pancasila ialah ....`,
+        opts: [
+          `mengikuti tes masuk UKM sesuai prosedur yang berlaku`,
+          `membantu mengantar teman ke kampus`,
+          `meminta perlakuan spesial ke dosen karena relasi khusus`,
+          `meminta tolong isi daftar hadir ke teman, padahal tidak masuk`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Mengikuti prosedur seleksi secara adil tanpa keistimewaan mencerminkan persamaan derajat, keadilan, dan kepatuhan hak-kewajiban sesuai Sila ke-5.`,
+          `SALAH. Membantu teman lebih mencerminkan solidaritas kemanusiaan (Sila ke-2).`,
+          `SALAH. Meminta perlakuan spesial (nepotisme) bertentangan dengan prinsip keadilan sosial.`,
+          `SALAH. Titip absen adalah bentuk ketidakjujuran akademik yang melanggar etika dan keadilan.`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 6,
+        q: `Berikut ini merupakan dinamika dalam memahami Pendidikan Pancasila di perguruan tinggi, kecuali ....`,
+        opts: [`tantangan global`, `interpretasi beragam`, `pluralitas`, `ekonomi`],
+        ans: 3,
+        exp: [
+          `SALAH. Tantangan global (globalisasi dan teknologi informasi) dibahas eksplisit sebagai dinamika memahami Pancasila.`,
+          `SALAH. Pancasila sebagai konsep terbuka memunculkan beragam interpretasi di masyarakat.`,
+          `SALAH. Pluralitas budaya, agama, dan suku merupakan tantangan nyata dalam memadukan persatuan.`,
+          `BENAR. Dalam uraian Subbab D Modul 1 KB 1, aspek "ekonomi" bukan poin utama dinamika penafsiran Pancasila di perguruan tinggi (yang ditekankan adalah interpretasi beragam, globalisasi/teknologi, pergeseran nilai sosial, dan pluralitas).`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 7,
+        q: `Berikut ini yang bukan termasuk penerapan Pancasila, yaitu ....`,
+        opts: [
+          `membayar pajak kendaraan bermotor`,
+          `tidak pernah ikut ronda karena terlalu malam`,
+          `hadir di pernikahan mantan`,
+          `mengadakan gerakan bagi nasi bungkus`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Membayar pajak adalah bentuk tanggung jawab warga negara dan pengamalan Sila ke-5.`,
+          `BENAR. Menolak berpartisipasi dalam keamanan lingkungan/gotong royong tanpa alasan sah menunjukkan sikap abai terhadap tanggung jawab sosial bersama.`,
+          `SALAH. Menghadiri undangan sosial adalah bentuk menjaga silaturahmi dan kerukunan antarmanusia.`,
+          `SALAH. Berbagi makanan kepada sesama merupakan wujud nyata kepedulian sosial (Sila ke-2 dan ke-5).`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 8,
+        q: `Berikut ini merupakan tantangan pluralitas, kecuali menghadapi ....`,
+        opts: [`isu-isu artis terkini`, `Pilpres 2024 mendatang`, `perbedaan suku`, `perbedaan agama`],
+        ans: 0,
+        exp: [
+          `BENAR. Gosip atau isu selebritas terkini bukan bagian dari tantangan pluralitas kebangsaan Indonesia.`,
+          `SALAH. Kontestasi politik (Pilpres) menguji kedewasaan menyikapi perbedaan pandangan politik dalam pluralitas.`,
+          `SALAH. Keragaman suku adalah bagian inti dari tantangan menjaga persatuan dalam pluralitas.`,
+          `SALAH. Perbedaan agama menuntut dialog antaragama dan toleransi sebagai tantangan pluralitas.`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 9,
+        q: `Berikut ini yang termasuk tantangan globalisasi, kecuali ....`,
+        opts: [
+          `teknologi informasi yang semakin berkembang`,
+          `munculnya berita hoax`,
+          `penggunaan media sosial dengan bijak`,
+          `menjadi YouTuber`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Pesatnya teknologi informasi membuka arus nilai asing yang menjadi tantangan globalisasi.`,
+          `SALAH. Penyebaran hoaks dan misinformasi merupakan tantangan serius di era digital global.`,
+          `BENAR. Menggunakan media sosial dengan bijak justru merupakan solusi/sikap positif menghadapi tantangan globalisasi, bukan tantangannya.`,
+          `SALAH. Profesi digital lintas batas seperti pembuat konten menghadapi dinamika paparan budaya global (dalam konteks soal kunci BMP, sikap bijak bermedia sosial adalah respons positifnya, bukan tantangan).`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 10,
+        q: `Salah satu tujuan Pendidikan Pancasila di perguruan tinggi supaya ....`,
+        opts: [
+          `mahasiswa aktif dalam politik`,
+          `mahasiswa cakap menyampaikan protes`,
+          `mahasiswa aktif membuat konten`,
+          `memenuhi kewajiban sks`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Dalam Subbab A Modul 1 KB 1 disebutkan bahwa Pendidikan Pancasila mendorong mahasiswa menjadi warga negara aktif dan partisipatif dalam kegiatan sosial, budaya, politik, dan kebijakan publik yang berintegritas.`,
+          `SALAH. Tujuannya bukan sekadar cakap memprotes, melainkan berpikir kritis dan mengambil keputusan bermartabat.`,
+          `SALAH. Membuat konten tidak tercantum sebagai tujuan kurikuler Pendidikan Pancasila.`,
+          `SALAH. Memenuhi kewajiban SKS hanyalah syarat administratif, bukan tujuan substantif pembentukan karakter ideologis.`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 11,
+        q: `Pendidikan Pancasila mendorong mahasiswa untuk menjadi warga negara yang ....`,
+        opts: [
+          `pasif dan partisipatif`,
+          `individualis dan partisipatif`,
+          `aktif dan partisipatif`,
+          `aktif dan responsif`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. "Pasif" bertolak belakang dengan semangat partisipatif.`,
+          `SALAH. "Individualis" bertentangan dengan nilai kekeluargaan dan gotong royong Pancasila.`,
+          `BENAR. Teks Modul 1 KB 1 secara eksplisit menyatakan: "Pendidikan Pancasila mendorong mahasiswa untuk menjadi warga negara yang aktif dan partisipatif."`,
+          `SALAH. Meskipun responsif baik, redaksi tepat dalam modul adalah "aktif dan partisipatif".`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 12,
+        q: `Pancasila dijadikan sebagai landasan negara dan dasar hukum untuk mengatur kehidupan ....`,
+        opts: [
+          `pribadi, politik, dan ekonomi Indonesia`,
+          `sosial, golongan, dan ekonomi Indonesia`,
+          `sosial, politik, dan budaya Indonesia`,
+          `sosial, politik, dan ekonomi Indonesia`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Pancasila sebagai landasan negara mengatur ranah publik berbangsa, bukan hanya ranah pribadi semata.`,
+          `SALAH. Istilah "golongan" bukan bagian dari rumusan tiga bidang dalam modul.`,
+          `SALAH. Modul menekankan kehidupan sosial, politik, dan ekonomi Indonesia.`,
+          `BENAR. Subbab B Modul 1 KB 1 menyebutkan secara persis: "Pancasila dijadikan sebagai landasan negara dan dasar hukum untuk mengatur kehidupan sosial, politik, dan ekonomi Indonesia."`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 13,
+        q: `Keadilan sosial bagi seluruh rakyat Indonesia. Prinsip ini menekankan perlunya pembangunan ekonomi yang adil dan merata untuk ....`,
+        opts: [
+          `semua rakyat pulau Jawa di Indonesia`,
+          `kalangan atas di Indonesia`,
+          `semua partai di Indonesia`,
+          `semua rakyat Indonesia`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Keadilan sosial tidak boleh bersifat Jawa-sentris atau terpusat di satu wilayah.`,
+          `SALAH. Mengutamakan kalangan atas bertentangan dengan asas pemerataan kesejahteraan.`,
+          `SALAH. Keadilan sosial ditujukan bagi warga negara, bukan kepentingan partai politik.`,
+          `BENAR. Sila ke-5 mengamanatkan kesejahteraan umum yang berkeadilan dan merata bagi seluruh rakyat Indonesia tanpa kecuali.`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 14,
+        q: `Pancasila di perguruan tinggi memiliki peran penting dalam membentuk ....`,
+        opts: [
+          `karakter, identitas bangsa, dan kemampuan berpikir kritis mahasiswa`,
+          `jiwa, raga, dan identitas mahasiswa`,
+          `karakter, moral, dan kemampuan demonstrasi mahasiswa`,
+          `moral, etika, dan kemampuan olahraga mahasiswa`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Sesuai Subbab A Modul 1 KB 1: "belajar Pancasila di perguruan tinggi memiliki peran penting dalam membentuk karakter, identitas bangsa, dan kemampuan berpikir kritis mahasiswa."`,
+          `SALAH. "Jiwa, raga" tidak sesuai dengan kutipan rumusan peran akademik mata kuliah dalam modul.`,
+          `SALAH. Kemampuan demonstrasi bukan kompetensi inti yang dirumuskan dalam modul.`,
+          `SALAH. Kemampuan olahraga bukan fokus capaian pembelajaran Pendidikan Pancasila.`
+        ]
+      },
+      {
+        m: 1, kb: 1, no: 15,
+        q: `Prinsip yang menyatakan bahwa Indonesia mengakui adanya Tuhan yang Maha Esa, menunjukkan adanya jaminan kebebasan ....`,
+        opts: [
+          `berbudaya dan menghormati semua suku dan kepercayaan dalam masyarakat Indonesia`,
+          `beragama dan menghormati semua agama dan kepercayaan dalam masyarakat Indonesia`,
+          `berpendapat dan menghormati budaya dan kepercayaan dalam masyarakat Indonesia`,
+          `bertakhta dan menghormati semua agama dan kepercayaan dalam masyarakat Indonesia`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Pengakuan Ketuhanan Yang Maha Esa berfokus pada kebebasan beragama dan berkepercayaan, bukan semata berbudaya.`,
+          `BENAR. Sila pertama menjamin kebebasan beragama serta penghormatan terhadap seluruh agama dan kepercayaan di Indonesia.`,
+          `SALAH. Kebebasan berpendapat lebih dekat pada asas demokrasi Sila ke-4.`,
+          `SALAH. Kata "bertakhta" tidak relevan dengan prinsip kebebasan beribadah warga negara.`
+        ]
+      },
+
+      // ================= MODUL 1 - TES FORMATIF 2 (1-15) =================
+      {
+        m: 1, kb: 2, no: 1,
+        q: `Berikut ini yang termasuk dalam ruang lingkup Pendidikan Pancasila, kecuali ....`,
+        opts: [
+          `Pancasila menjadi dasar negara`,
+          `Pancasila menjadi pilar negara`,
+          `Pancasila menjadi ideologi`,
+          `Pengantar Pendidikan Pancasila`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Pancasila sebagai dasar negara adalah bagian pokok ruang lingkup kajian Pendidikan Pancasila.`,
+          `BENAR. Pancasila berkedudukan sebagai dasar negara (fondasi), bukan sekadar "pilar" yang sejajar dengan unsur lain.`,
+          `SALAH. Pancasila sebagai ideologi nasional merupakan substansi wajib dalam kisi-kisi mata kuliah.`,
+          `SALAH. Pengantar Pendidikan Pancasila termasuk dalam kisi-kisi materi sesuai SK Dirjen Dikti No. 84/E/KPT/2020.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 2,
+        q: `Objek formal adalah ....`,
+        opts: [`sudut pandang`, `materi yang dikaji`, `opini`, `pendapat`],
+        ans: 0,
+        exp: [
+          `BENAR. Sesuai Subbab B Modul 1 KB 2: "Objek material adalah sesuatu hal yang ingin dikaji, sedangkan objek formal adalah sudut pandang."`,
+          `SALAH. Materi yang dikaji merupakan definisi dari objek material.`,
+          `SALAH. Opini adalah pandangan subjektif, bukan istilah metodologis objek formal ilmu.`,
+          `SALAH. Pendapat tidak menjelaskan definisi epistemologis objek formal.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 3,
+        q: `Tindakan nyata dalam usaha persatuan dan kesatuan adalah ....`,
+        opts: [
+          `kerja bakti di kampus`,
+          `demonstrasi`,
+          `mengikuti kegiatan UKM`,
+          `menggunakan transportasi umum ke kampus`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Kerja bakti mencerminkan semangat gotong royong, kebersamaan, dan persatuan antarsivitas tanpa membedakan latar belakang.`,
+          `SALAH. Demonstrasi adalah bentuk penyampaian aspirasi politik, bukan contoh langsung tindakan persatuan lintas kelompok.`,
+          `SALAH. Mengikuti UKM dapat bersifat minat khusus/hobi, belum tentu langsung menonjolkan kerja sama persatuan seperti kerja bakti bersama.`,
+          `SALAH. Menggunakan transportasi umum lebih terkait mobilitas pribadi atau kepedulian lingkungan.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 4,
+        q: `Salah satu pendekatan yang dapat diterapkan untuk memahami Pancasila adalah ....`,
+        opts: [
+          `mendirikan pusat studi Pancasila`,
+          `mengikuti workshop Pancasila sebagai pilar`,
+          `kehadiran kampung Pancasila`,
+          `film bertema Pancasila`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Dalam Subbab D Modul 1 KB 2 ("Pendekatan Memahami Pancasila"), dijelaskan secara khusus peran pendirian Pusat Studi Pancasila di perguruan tinggi.`,
+          `SALAH. Penyebutan "Pancasila sebagai pilar" justru dikritik dalam BMP karena menyamakan dasar negara dengan pilar.`,
+          `SALAH. Kampung Pancasila dibahas pada Modul 6 terkait ketahanan ideologi di masyarakat, bukan pendekatan utama pada KB 2 Modul 1.`,
+          `SALAH. Film dapat menjadi media pendukung, namun pendekatan akademik yang dibahas di KB 2 adalah Pusat Studi Pancasila.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 5,
+        q: `Berikut ini yang termasuk objek material Pendidikan Pancasila adalah ....`,
+        opts: [
+          `keragaman budaya`,
+          `kegiatan keagamaan di kampus`,
+          `tugas kuliah`,
+          `teks Pembukaan UUD 1945`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Keragaman budaya adalah konteks sosiologis masyarakat, bukan teks bahan ajar spesifik yang disebut sebagai contoh objek material.`,
+          `SALAH. Kegiatan keagamaan adalah praktik/implementasi nilai, bukan bahan ajar utama.`,
+          `SALAH. Tugas kuliah merupakan instrumen evaluasi pembelajaran.`,
+          `BENAR. Teks-teks dasar seperti risalah sidang BPUPK/PPKI dan Pembukaan UUD 1945 adalah contoh utama objek material Pendidikan Pancasila.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 6,
+        q: `Berikut merupakan tantangan Pendidikan Pancasila di perguruan tinggi, kecuali ....`,
+        opts: [
+          `keragaman latar budaya mahasiswa`,
+          `penggunaan bahasa Indonesia`,
+          `banyaknya fakultas dan disiplin ilmu`,
+          `perbedaan pemahaman nilai-nilai Pancasila`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Keragaman latar budaya merupakan bagian dari tantangan pluralitas mahasiswa.`,
+          `BENAR. Penggunaan bahasa Indonesia justru menjadi bahasa persatuan yang memudahkan penyampaian Pendidikan Pancasila, bukan tantangan penghambat.`,
+          `SALAH. Keragaman disiplin ilmu menuntut pendekatan kontekstualisasi Pancasila yang berbeda-beda.`,
+          `SALAH. Perbedaan interpretasi dan pemahaman nilai Pancasila memang menjadi tantangan pembelajaran.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 7,
+        q: `Berikut ini merupakan tindakan di luar ideologi Pancasila, kecuali ....`,
+        opts: [`intoleransi`, `terorisme`, `sukuisme`, `tenggang rasa`],
+        ans: 3,
+        exp: [
+          `SALAH. Intoleransi bertentangan langsung dengan Sila ke-1, ke-2, dan ke-3.`,
+          `SALAH. Terorisme dan kekerasan bertentangan dengan nilai kemanusiaan dan perdamaian Pancasila.`,
+          `SALAH. Sukuisme sempit merusak persatuan Indonesia (Sila ke-3).`,
+          `BENAR. Tenggang rasa (tepa salira) adalah sikap inti yang sejalan dengan ideologi Pancasila, bukan di luarnya.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 8,
+        q: `Reaksi yang mencerminkan pemahaman Pancasila adalah ....`,
+        opts: [
+          `menyebar informasi tanpa konfirmasi`,
+          `menerima informasi satu pihak`,
+          `membantu teman yang merasa sendiri`,
+          `acuh terhadap teman yang lama tidak terlihat di kampus`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Menyebarkan informasi tanpa verifikasi berpotensi menyebar hoaks dan perpecahan.`,
+          `SALAH. Menerima informasi sepihak mengabaikan prinsip berpikir kritis dan keadilan.`,
+          `BENAR. Membantu teman yang terisolasi/sendiri menunjukkan kepedulian sosial dan kemanusiaan yang adil dan beradab.`,
+          `SALAH. Sikap acuh mencerminkan individualisme yang jauh dari nilai kekeluargaan Pancasila.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 9,
+        q: `Contoh penerapan etika di kampus adalah ....`,
+        opts: [
+          `menghubungi dosen tengah malam karena tidak puas dengan nilai`,
+          `meminta tolong teman mengisi daftar hadir padahal tidak masuk`,
+          `tidak menggunakan knalpot brong di lingkungan kampus`,
+          `datang terlambat saat kuliah karena bangun kesiangan`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Menghubungi dosen di luar jam wajar secara emosional melanggar etika komunikasi akademik.`,
+          `SALAH. Memalsukan presensi merupakan pelanggaran etika kejujuran.`,
+          `BENAR. Tidak memakai knalpot bising (brong) menjaga kenyamanan, ketertiban, dan menghormati hak orang lain di ruang publik kampus.`,
+          `SALAH. Terlambat karena lalai menunjukkan kurangnya kedisiplinan.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 10,
+        q: `Berikut ini merupakan penerapan tenggang rasa dalam pluralitas di kampus, yaitu dengan memaklumi ....`,
+        opts: [
+          `gaya dan logat bahasa teman lain daerah`,
+          `dosen yang terlambat mengajar`,
+          `teman yang tidak mengumpulkan tugas kuliah`,
+          `kawan yang ketiduran di kelas saat kuliah`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Menghargai perbedaan logat dan gaya bahasa daerah teman merupakan wujud nyata tenggang rasa dalam kebinekaan budaya.`,
+          `SALAH. Keterlambatan mengajar berkaitan dengan kedisiplinan profesional, bukan pluralitas budaya.`,
+          `SALAH. Tidak mengumpulkan tugas adalah persoalan tanggung jawab akademik.`,
+          `SALAH. Tertidur di kelas berkaitan dengan etika belajar, bukan toleransi keragaman.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 11,
+        q: `Pancasila sebagai ideologi merujuk pada seperangkat ....`,
+        opts: [
+          `akal, moral, nilai, dan keyakinan`,
+          `pandangan, nilai, keyakinan, dan prinsip-prinsip`,
+          `nilai, asas, keyakinan, dan etika`,
+          `etika, moral, nilai, dan keyakinan`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Susunan kata tersebut tidak sesuai dengan definisi dalam Subbab A Modul 1 KB 2.`,
+          `BENAR. Modul 1 KB 2 menyatakan: "Pancasila sebagai ideologi merujuk pada seperangkat pandangan, nilai, keyakinan, dan prinsip-prinsip yang menjadi dasar pemikiran dan tindakan."`,
+          `SALAH. "Asas dan etika" tidak menggantikan "pandangan dan prinsip-prinsip" dalam definisi teks.`,
+          `SALAH. Kombinasi ini merujuk pada aspek moral-etika, bukan redaksi definisi ideologi di modul.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 12,
+        q: `Pancasila sebagai ideologi digunakan sebagai landasan negara Indonesia dan menjadi pedoman bagi seluruh warga negara dalam mengatur hubungan ....`,
+        opts: [
+          `pribadi, politik, dan budaya`,
+          `politik, luar negeri, dan ekonomi`,
+          `masyarakat, politik, dan kesenian`,
+          `sosial, politik, dan ekonomi`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Ranah pribadi bukan fokus utama pengaturan hubungan bernegara dalam rumusan tersebut.`,
+          `SALAH. "Luar negeri" terlalu sempit dibandingkan hubungan sosial kemasyarakatan.`,
+          `SALAH. "Kesenian" bukan bagian dari tiga bidang utama yang dirumuskan modul.`,
+          `BENAR. Teks modul menyebut: "menjadi pedoman bagi seluruh warga negara dalam mengatur hubungan sosial, politik, dan ekonomi dalam masyarakat."`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 13,
+        q: `Sebagai sistem filsafat, Pancasila mengandung prinsip-prinsip filsafat yang mendasari setiap aspek kehidupan manusia, termasuk tata nilai ....`,
+        opts: [
+          `etika dan estetika`,
+          `moral dan ketuhanan`,
+          `etika dan moral`,
+          `etika dan adab`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Estetika berkaitan dengan keindahan, bukan pasangan utama yang disebut dalam teks Modul 1 KB 2.`,
+          `SALAH. Ketuhanan adalah salah satu sila, sedangkan pasangan tata nilai yang disebut modul adalah etika dan moral.`,
+          `BENAR. Modul 1 KB 2 menyatakan: "Pancasila mengandung prinsip-prinsip filsafat yang mendasari setiap aspek kehidupan manusia, termasuk tata nilai, etika, dan moral."`,
+          `SALAH. Pasangan istilah baku dalam kalimat modul adalah etika dan moral.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 14,
+        q: `Pancasila memberikan arah dan panduan bagi pengembangan ilmu pengetahuan dan penelitian di Indonesia merupakan makna dari Pancasila menjadi dasar pengembangan ....`,
+        opts: [`ilmu`, `moral`, `etika`, `budaya`],
+        ans: 0,
+        exp: [
+          `BENAR. Subbab A Modul 1 KB 2 menegaskan peran Pancasila "Sebagai dasar pengembangan ilmu" dalam menyusun kurikulum, metodologi, dan riset.`,
+          `SALAH. Pengembangan moral terkait Pancasila sebagai sistem etika.`,
+          `SALAH. Sistem etika mengatur perilaku normatif, bukan secara spesifik riset keilmuan.`,
+          `SALAH. Pengembangan budaya adalah konteks kultural, bukan istilah substansi IPTEK.`
+        ]
+      },
+      {
+        m: 1, kb: 2, no: 15,
+        q: `Berikut ini merupakan teks-teks dasar yang berhubungan dengan Pancasila, kecuali ....`,
+        opts: [
+          `Pembukaan UUD 1945`,
+          `Undang-Undang Dasar Negara Republik Indonesia Tahun 1945`,
+          `Piagam Nasional`,
+          `Dekrit Presiden 5 Juli 1959`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Pembukaan UUD 1945 memuat rumusan resmi Pancasila pada alinea keempat.`,
+          `SALAH. UUD NRI Tahun 1945 merupakan konstitusi yang bersumber pada Pancasila.`,
+          `BENAR. Tidak ada dokumen historis resmi bernama "Piagam Nasional" dalam sejarah perumusan Pancasila (yang ada adalah Piagam Jakarta 22 Juni 1945).`,
+          `SALAH. Dekrit Presiden 5 Juli 1959 mengembalikan berlakunya UUD 1945 beserta rumusan Pancasila di dalam Pembukaannya.`
+        ]
+      },
+
+      // ================= MODUL 2 - TES FORMATIF 1 (1-10) =================
+      {
+        m: 2, kb: 1, no: 1,
+        q: `Apa makna philosophische grondslag?`,
+        opts: [`Filsafat negara.`, `Dasar filsafat negara.`, `Pilar negara.`, `Fundamen negara.`],
+        ans: 1,
+        exp: [
+          `SALAH. Kurang tepat karena kata "grondslag" berarti dasar/landasan, bukan sekadar filsafat.`,
+          `BENAR. Dalam pidato 1 Juni 1945 dan rangkuman Modul 2 KB 1, philosophische grondslag diartikan sebagai dasar filsafat negara.`,
+          `SALAH. Pancasila adalah dasar negara, bukan pilar negara.`,
+          `SALAH. "Fundamen" hanya menggambarkan sebagian makna dasar tanpa menerjemahkan unsur "philosophische" (filsafat).`
+        ]
+      },
+      {
+        m: 2, kb: 1, no: 2,
+        q: `Kata philosophische grondslag berasal dari bahasa ....`,
+        opts: [`Belanda`, `Jerman`, `Prancis`, `Inggris`],
+        ans: 0,
+        exp: [
+          `BENAR. Dalam kutipan pidato 1 Juni 1945 di Modul 2 KB 1, Sukarno menyebut: "dalam bahasa Belanda: philosophische grondslag daripada Indonesia Merdeka."`,
+          `SALAH. Istilah bahasa Jerman yang digunakan Sukarno adalah "Weltanschauung".`,
+          `SALAH. Istilah ini bukan berasal dari bahasa Prancis.`,
+          `SALAH. Dalam bahasa Inggris padanannya adalah "philosophical foundation".`
+        ]
+      },
+      {
+        m: 2, kb: 1, no: 3,
+        q: `Sidang BPUPK diketuai oleh ....`,
+        opts: [`Wilopo`, `Sudirman`, `Soekarno`, `Radjiman Wedyodiningrat`],
+        ans: 3,
+        exp: [
+          `SALAH. Wilopo adalah tokoh politik/Perdana Menteri pada masa demokrasi parlementer, bukan ketua BPUPK.`,
+          `SALAH. Sudirman adalah Panglima Besar TNI atau anggota sidang biasa, bukan ketua BPUPK.`,
+          `SALAH. Soekarno adalah anggota BPUPK dan ketua Panitia Kecil/Panitia Sembilan serta ketua PPKI.`,
+          `BENAR. Dr. KRT. Radjiman Wedyodiningrat ditunjuk sebagai Ketua BPUPK saat pembentukannya pada 29 April 1945.`
+        ]
+      },
+      {
+        m: 2, kb: 1, no: 4,
+        q: `Sumber sejarah yang otentik tentang Pancasila dapat ditemukan di ....`,
+        opts: [`risalah sidang BPUPK`, `arsip`, `foto`, `gedung`],
+        ans: 0,
+        exp: [
+          `BENAR. Subbab D Modul 2 KB 1 menyebut sumber tertulis resmi dan otentik mencakup risalah sidang BPUPK, risalah sidang PPKI, pidato 1 Juni 1945, dan Pembukaan UUD 1945.`,
+          `SALAH. "Arsip" terlalu umum dibandingkan dokumen spesifik risalah sidang BPUPK yang mencatat langsung perdebatan dasar negara.`,
+          `SALAH. Foto termasuk sumber benda yang hanya merekam visual suasana, bukan teks rumusan otentik.`,
+          `SALAH. Gedung merupakan artefak lokasi peristiwa, tidak memuat naskah rumusan.`
+        ]
+      },
+      {
+        m: 2, kb: 1, no: 5,
+        q: `Panitia Sembilan bertugas untuk menyusun ....`,
+        opts: [
+          `rancangan anggaran negara`,
+          `struktur pemerintahan`,
+          `anggota DPR`,
+          `rancangan pembukaan UUD RI`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Anggaran negara bukan tugas Panitia Sembilan pada masa sidang BPUPK.`,
+          `SALAH. Pembagian struktur pemerintahan dan badan-badan negara dibahas kemudian oleh PPKI.`,
+          `SALAH. Anggota DPR belum dibentuk pada masa BPUPK.`,
+          `BENAR. Panitia Sembilan dibentuk setelah pidato 1 Juni 1945 untuk menyusun rancangan Pembukaan (Mukadimah) UUD NRI yang dikenal sebagai Piagam Jakarta.`
+        ]
+      },
+      {
+        m: 2, kb: 1, no: 6,
+        q: `Perubahan tujuh kata dalam Piagam Jakarta masuk ke dalam fase ....`,
+        opts: [`pembuahan`, `perumusan`, `pengesahan`, `pembaharuan`],
+        ans: 2,
+        exp: [
+          `SALAH. Fase pembuahan terjadi sejak 1920-an hingga Sumpah Pemuda 1928.`,
+          `SALAH. Fase perumusan berlangsung pada sidang BPUPK (29 Mei–1 Juni 1945) hingga Piagam Jakarta (22 Juni 1945).`,
+          `BENAR. Penghapusan tujuh kata pada sila pertama Piagam Jakarta terjadi pada sidang PPKI tanggal 18 Agustus 1945 saat pengesahan Pembukaan UUD 1945.`,
+          `SALAH. "Pembaharuan" tidak termasuk dalam tiga fase historis Yudi Latif.`
+        ]
+      },
+      {
+        m: 2, kb: 1, no: 7,
+        q: `Rumusan Pancasila sebagai dasar negara yang secara konstitusional mengikat kehidupan berbangsa dan bernegara merupakan Pancasila versi ....`,
+        opts: [`1 Juni 1945`, `22 Juni 1945`, `17 Agustus 1945`, `18 Agustus 1945`],
+        ans: 3,
+        exp: [
+          `SALAH. 1 Juni 1945 adalah hari pengusulan gagasan dan penamaan Pancasila oleh Sukarno di sidang BPUPK.`,
+          `SALAH. 22 Juni 1945 menghasilkan rancangan Mukadimah (Piagam Jakarta) yang masih mengalami perubahan sebelum disahkan.`,
+          `SALAH. 17 Agustus 1945 adalah hari Proklamasi Kemerdekaan RI.`,
+          `BENAR. Rumusan final Pancasila yang sah dan mengikat secara konstitusional disahkan oleh PPKI dalam Pembukaan UUD 1945 pada tanggal 18 Agustus 1945.`
+        ]
+      },
+      {
+        m: 2, kb: 1, no: 8,
+        q: `Pemahaman Pancasila mulai terjadi reduksi sejak ....`,
+        opts: [`pasca-Soekarno`, `pasca-Soeharto`, `pasca-Reformasi`, `era kolonial`],
+        ans: 2,
+        exp: [
+          `SALAH. Pada era pasca-Soekarno (Orde Baru), Pancasila justru diwajibkan secara masif lewat P4 dan asas tunggal.`,
+          `SALAH. Istilah yang dipakai secara spesifik dalam Subbab A Modul 2 KB 1 adalah "pasca-Reformasi".`,
+          `BENAR. Subbab A Modul 2 KB 1 menjelaskan bahwa sejak tahun 1999 (era pasca-Reformasi), Pancasila kurang mendapat perhatian memadai dan mengalami reduksi serta tafsir beragam.`,
+          `SALAH. Pada era kolonial Pancasila belum dirumuskan secara formal sebagai dasar negara.`
+        ]
+      },
+      {
+        m: 2, kb: 1, no: 9,
+        q: `Ketuhanan YME, Perikemanusiaan, Kebangsaan, Kerakyatan, dan Keadilan merupakan bagian dari rumusan Pancasila dalam ....`,
+        opts: [`UUD 1945`, `Dekrit Presiden`, `RIS dan UUDS 1950`, `Pasca-Perubahan UUD 1945`],
+        ans: 2,
+        exp: [
+          `SALAH. Dalam Pembukaan UUD 1945 bunyinya lengkap (misalnya "Kemanusiaan yang adil dan beradab", "Persatuan Indonesia").`,
+          `SALAH. Pasca-Dekrit Presiden 5 Juli 1959 kembali menggunakan rumusan Pembukaan UUD 1945.`,
+          `BENAR. Subbab C Modul 2 KB 1 mencatat bahwa Mukadimah Konstitusi RIS 1949 dan UUDS 1950 memuat rumusan ringkas: Ke-Tuhanan Yang Maha Esa, Peri-Kemanusiaan, Kebangsaan, Kerakyatan, dan Keadilan Sosial.`,
+          `SALAH. Pasca-amandemen UUD 1945, Pembukaan tidak diubah dan tetap menggunakan rumusan 18 Agustus 1945.`
+        ]
+      },
+      {
+        m: 2, kb: 1, no: 10,
+        q: `Hari Lahir Pancasila ditetapkan berdasarkan ....`,
+        opts: [
+          `Keppres RI No. 22 Tahun 2016`,
+          `Keppres RI No. 23 Tahun 2016`,
+          `Keppres RI No. 24 Tahun 2016`,
+          `Keppres RI No. 25 Tahun 2016`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Nomor keputusan presiden tersebut bukan penetapan Hari Lahir Pancasila.`,
+          `SALAH. Nomor 23 Tahun 2016 bukan Keppres tentang Hari Lahir Pancasila.`,
+          `BENAR. Keputusan Presiden Republik Indonesia Nomor 24 Tahun 2016 menetapkan tanggal 1 Juni sebagai Hari Lahir Pancasila.`,
+          `SALAH. Nomor 25 Tahun 2016 tidak tepat.`
+        ]
+      },
+
+      // ================= MODUL 2 - TES FORMATIF 2 (No. 1, 5, 6, 7, 8, 9, 10 dalam teks sumber) =================
+      {
+        m: 2, kb: 2, no: 1,
+        q: `Fase perumusan Pancasila terjadi pada ....`,
+        opts: [`pleno PPKI`, `sidang BPUPK`, `sidang PPKI`, `koordinasi BPUPK dan PPKI`],
+        ans: 1,
+        exp: [
+          `SALAH. Pleno PPKI berperan pada fase pengesahan tanggal 18 Agustus 1945.`,
+          `BENAR. Menurut sistematika Yudi Latif dalam Modul 2 KB 2, fase perumusan dimulai pada sidang besar BPUPK tanggal 29 Mei–1 Juni 1945.`,
+          `SALAH. Sidang PPKI berada pada fase ketiga, yaitu pengesahan.`,
+          `SALAH. Pembentukan dasar negara dirumuskan dalam persidangan resmi BPUPK.`
+        ]
+      },
+      {
+        m: 2, kb: 2, no: 5,
+        q: `Proses perumusan Pancasila dimulai dari ....`,
+        opts: [
+          `penyusunan sila-sila Pancasila`,
+          `usulan gagasan dasar negara`,
+          `usulan nama Pancasila`,
+          `usulan bentuk negara`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Penyusunan sistematis sila dilakukan setelah pandangan para anggota terkumpul.`,
+          `BENAR. Ketua BPUPK Radjiman Wedyodiningrat membuka sidang dengan pertanyaan tentang dasar negara Indonesia merdeka, yang dijawab lewat usulan gagasan dasar negara oleh para pembicara.`,
+          `SALAH. Nama "Pancasila" baru diusulkan oleh Sukarno pada akhir pidatonya tanggal 1 Juni 1945.`,
+          `SALAH. Pembahasan bentuk negara dilakukan lebih intensif pada sidang kedua BPUPK tanggal 10 Juli 1945.`
+        ]
+      },
+      {
+        m: 2, kb: 2, no: 6,
+        q: `Pentingnya pendekatan sejarah dalam mempelajari Pancasila karena untuk ....`,
+        opts: [
+          `menghindari tafsir Pancasila`,
+          `memahami arti penting Pancasila dalam berbangsa dan bernegara`,
+          `mengetahui sejarah Pancasila secara baik dan benar`,
+          `mengungkap fakta sejarah Pancasila secara menyeluruh`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Tafsir tetap muncul, namun harus diverifikasi dengan fakta sejarah, bukan dihindari sama sekali.`,
+          `SALAH. Pemahaman arti penting merupakan hasil lanjutan, sedangkan pengantar KB 2 menekankan ketepatan pengetahuan sejarah agar tidak salah paham.`,
+          `BENAR. Modul 2 KB 2 menekankan pentingnya memahami sejarah Pancasila secara baik dan benar guna menghindarkan kesalahpahaman terhadap informasi sepenggal di media.`,
+          `SALAH. Pengungkapan fakta adalah metode kerja sejarawan; bagi mahasiswa tujuannya memahami sejarahnya secara tepat dan benar.`
+        ]
+      },
+      {
+        m: 2, kb: 2, no: 7,
+        q: `Berikut ini yang menjadi bagian dari pembentuk sistem pengetahuan Pancasila, kecuali ....`,
+        opts: [
+          `sejarah Pancasila`,
+          `fakta sejarah`,
+          `peristiwa sejarah`,
+          `penafsiran sejarah Pancasila`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Sejarah Pancasila adalah komponen utama penyusun pengetahuan sejarah bangsa.`,
+          `SALAH. Fakta sejarah yang terverifikasi membentuk fondasi objektif pengetahuan Pancasila.`,
+          `SALAH. Peristiwa sejarah seperti sidang BPUPK dan PPKI adalah unsur pembentuk pengetahuan.`,
+          `BENAR. Penafsiran bersifat subjektif dan sering kali mengalami penyimpangan jika tidak sesuai fakta, sehingga bukan pembentuk sistem pengetahuan objektif.`
+        ]
+      },
+      {
+        m: 2, kb: 2, no: 8,
+        q: `Berikut ini yang bukan termasuk syarat-syarat ilmiah pengetahuan Pancasila ialah ....`,
+        opts: [`ada objek material`, `bermetode`, `bersistem`, `bersifat parsial`],
+        ans: 3,
+        exp: [
+          `SALAH. Syarat pengetahuan ilmiah memang mengharuskan adanya objek (objek material dan formal).`,
+          `SALAH. Pengetahuan ilmiah wajib memiliki metode yang jelas.`,
+          `SALAH. Pengetahuan ilmiah tersusun secara sistematis (bersistem).`,
+          `BENAR. Ilmu pengetahuan harus bersifat universal dan menyeluruh (utuh), bukan bersifat parsial atau terpotong-potong.`
+        ]
+      },
+      {
+        m: 2, kb: 2, no: 9,
+        q: `Nilai-nilai Pancasila dianggap sudah sejak lama menjadi bagian dari kehidupan bangsa Indonesia. Sila-sila Pancasila yang dirumuskan saat ini ialah bagian dari proses panjang sejarah Indonesia. Uraian di atas termasuk fase ....`,
+        opts: [
+          `perumusan Pancasila`,
+          `perintisan Pancasila`,
+          `penetapan Pancasila`,
+          `pengembangan Pancasila`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Fase perumusan berlangsung spesifik pada masa sidang BPUPK tahun 1945.`,
+          `BENAR. Nilai-nilai budaya Nusantara serta rintisan gagasan kebangsaan sejak era pergerakan termasuk dalam fase perintisan (pembuahan) Pancasila.`,
+          `SALAH. Fase penetapan/pengesahan merujuk pada tanggal 18 Agustus 1945.`,
+          `SALAH. Pengembangan merupakan implementasi pasca-kemerdekaan.`
+        ]
+      },
+      {
+        m: 2, kb: 2, no: 10,
+        q: `UUD Sementara berlaku sejak ....`,
+        opts: [`17 Agustus 1945`, `17 Agustus 1950`, `17 Agustus 1965`, `17 Agustus 1998`],
+        ans: 1,
+        exp: [
+          `SALAH. 17 Agustus 1945 adalah Proklamasi Kemerdekaan; UUD 1945 disahkan 18 Agustus 1945.`,
+          `BENAR. UUDS 1950 mulai berlaku sejak kembalinya Indonesia ke bentuk negara kesatuan pada 17 Agustus 1950 hingga Dekrit Presiden 5 Juli 1959.`,
+          `SALAH. Tahun 1965 berada pada era Demokrasi Terpimpin di bawah UUD 1945.`,
+          `SALAH. Tahun 1998 adalah awal era Reformasi dengan UUD 1945.`
+        ]
+      },
+
+      // ================= MODUL 3 - TES FORMATIF 1 (1-10) =================
+      {
+        m: 3, kb: 1, no: 1,
+        q: `Pancasila berkedudukan sebagai dasar negara, artinya ....`,
+        opts: [
+          `ditulis dalam lambang negara`,
+          `dijadikan dasar mengatur negara`,
+          `diajarkan pada pendidikan formal`,
+          `ditulis di dalam dokumen negara`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Lambang negara (Garuda Pancasila) adalah simbol visual, belum menjelaskan kedudukan hukum-kenegaraan Pancasila.`,
+          `BENAR. Sebagai dasar negara, Pancasila adalah fundamen dan pedoman tertinggi dalam menyelenggarakan dan mengatur pemerintahan negara.`,
+          `SALAH. Diajarkan di pendidikan formal merupakan sarana sosialisasi dan internalisasi.`,
+          `SALAH. Sekadar tertulis dalam dokumen tanpa fungsi regulatif tidak mencerminkan makna dasar negara.`
+        ]
+      },
+      {
+        m: 3, kb: 1, no: 2,
+        q: `Secara yuridis, penerimaan Pancasila sebagai Dasar Negara berlandaskan pada payung hukum ....`,
+        opts: [
+          `Keputusan MPRS Nomor: XIX/MPRS/1966`,
+          `Keputusan MPRS Nomor: XX/MPRS/1966`,
+          `Keputusan MPRS Nomor: XXI/MPRS/1966`,
+          `Keputusan MPRS Nomor: XXII/MPRS/1966`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Ketetapan MPRS No. XIX/MPRS/1966 membahas peninjauan kembali produk legislatif di luar produk MPRS.`,
+          `BENAR. Ketetapan MPRS No. XX/MPRS/1966 menegaskan sumber tertib hukum Republik Indonesia dan kedudukan Pancasila sebagai sumber dari segala sumber hukum.`,
+          `SALAH. Ketetapan MPRS No. XXI/MPRS/1966 berkaitan dengan pemberian otonomi seluas-luasnya kepada daerah.`,
+          `SALAH. Ketetapan MPRS No. XXII/MPRS/1966 mengatur penyederhanaan kepartaian, keormasan, dan kekaryaan.`
+        ]
+      },
+      {
+        m: 3, kb: 1, no: 3,
+        q: `Pembukaan UUD 1945 terdapat alinea dengan spesifikasinya masing-masing. Alinea berapakah yang memuat dasar negara, tujuan negara, ketentuan negara dan dasar filsafat negara?`,
+        opts: [`1`, `2`, `3`, `4`],
+        ans: 3,
+        exp: [
+          `SALAH. Alinea 1 memuat pernyataan hak kemerdekaan segala bangsa dan penolakan penjajahan.`,
+          `SALAH. Alinea 2 memuat cita-cita negara yang merdeka, bersatu, berdaulat, adil, dan makmur.`,
+          `SALAH. Alinea 3 memuat pengakuan religius pernyataan kemerdekaan atas berkat rahmat Allah Yang Maha Kuasa.`,
+          `BENAR. Alinea ke-4 Pembukaan UUD 1945 secara eksplisit memuat tujuan negara, bentuk negara republik berkedaulatan rakyat, UUD, serta rumusan dasar negara Pancasila.`
+        ]
+      },
+      {
+        m: 3, kb: 1, no: 4,
+        q: `Pancasila sebagai dasar negara merupakan etika bagi bangsa Indonesia dalam menjalankan kehidupan berbangsa dan bernegara. Nilai-nilai etika yang dapat kita temukan dalam Pancasila dimanifestasikan dalam bentuk tatanan seperti berikut, kecuali ....`,
+        opts: [
+          `tatanan hidup beragama dengan kebebasan beribadah sesuai dengan keyakinan masing-masing`,
+          `tatanan bela negara, hak dan kewajiban warga negara untuk membela negara`,
+          `tatanan pendidikan, dengan tujuan mencerdaskan kehidupan bangsa`,
+          `semua pernyataan adalah benar`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Tatanan hidup beragama merupakan manifestasi nyata Sila ke-1.`,
+          `SALAH. Tatanan bela negara mencerminkan persatuan dan kedaulatan rakyat.`,
+          `SALAH. Mencerdaskan kehidupan bangsa tercantum dalam tujuan negara Pembukaan UUD 1945.`,
+          `BENAR. Karena ketiga opsi A, B, dan C semuanya merupakan bentuk manifestasi tatanan etika Pancasila yang benar, maka jawaban yang tepat untuk pengecualian soal ini adalah "semua pernyataan adalah benar".`
+        ]
+      },
+      {
+        m: 3, kb: 1, no: 5,
+        q: `Sebagai suatu nilai, Pancasila memberikan dasar-dasar yang bersifat fundamental dan universal bagi manusia baik dalam hidup bermasyarakat, berbangsa dan bernegara. Pancasila berkedudukan sebagai sumber dari segala sumber hukum di negara Indonesia, dikenal dengan norma ....`,
+        opts: [`susila`, `agama`, `hukum`, `kehidupan`],
+        ans: 2,
+        exp: [
+          `SALAH. Norma susila bersumber pada hati nurani pribadi dan tidak selalu mengikat secara yuridis formal.`,
+          `SALAH. Norma agama berasal dari ajaran wahyu keagamaan masing-masing pemeluk.`,
+          `BENAR. Sebagai sumber dari segala sumber hukum negara, Pancasila menjadi landasan tertinggi bagi seluruh tatanan norma hukum positif Indonesia.`,
+          `SALAH. "Norma kehidupan" bukan istilah yuridis ketatanegaraan untuk sumber hukum tertinggi.`
+        ]
+      },
+      {
+        m: 3, kb: 1, no: 6,
+        q: `Cita-cita dan tujuan bangsa Indonesia secara terperinci termuat dalam ....`,
+        opts: [
+          `sila-sila Pancasila`,
+          `program pembangunan jangka panjang`,
+          `Pembukaan UUD 1945`,
+          `pasal-pasal UUD 1945`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Sila-sila Pancasila memuat prinsip dasar filosofis, sedangkan rincian cita-cita dan tujuan negara tercantum dalam Pembukaan UUD 1945.`,
+          `SALAH. Program pembangunan adalah penjabaran periodik oleh pemerintah.`,
+          `BENAR. Pembukaan UUD 1945 (khususnya alinea 2 dan 4) merinci cita-cita bangsa yang merdeka, bersatu, berdaulat, adil, makmur, serta empat tujuan nasional.`,
+          `SALAH. Pasal-pasal UUD 1945 merupakan penjabaran normatif kelembagaan dan hak warga negara.`
+        ]
+      },
+      {
+        m: 3, kb: 1, no: 7,
+        q: `Pancasila adalah leitmotive dan leitstar, dorongan pokok dan bintang penunjuk jalan. Hal tersebut dikemukakan oleh tokoh bernama ....`,
+        opts: [`Kaelan`, `Hamka`, `Ruslan Abdulgani`, `Kansil`],
+        ans: 2,
+        exp: [
+          `SALAH. Kaelan banyak membahas Pancasila dalam perspektif ontologis, epistemologis, dan aksiologis.`,
+          `SALAH. Buya Hamka adalah ulama dan sastrawan, bukan pengemuka istilah leitmotive dan leitstar dalam analisis modul ini.`,
+          `BENAR. Dalam Modul 3 disebutkan bahwa Ruslan Abdulgani menyatakan Pancasila sebagai leitmotive (dorongan pokok) dan leitstar (bintang penunjuk jalan).`,
+          `SALAH. Kansil dikenal sebagai penulis buku teks hukum tata negara dan pendidikan kewarganegaraan.`
+        ]
+      },
+      {
+        m: 3, kb: 1, no: 8,
+        q: `Pancasila sebagai dasar filsafat negara maka Pancasila pada hakikatnya merupakan satu cita hukum yang menguasai hukum dasar baik hukum tertulis dan tidak tertulis. Ini disebut juga dengan ....`,
+        opts: [
+          `Staatfundamental Organization`,
+          `Staatfundamental Norm`,
+          `Onrechtmatige daad`,
+          `Zaakwarneming`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Istilah ini bukan konsep hukum tata negara baku.`,
+          `BENAR. Pancasila dalam Pembukaan UUD 1945 berkedudukan sebagai Staatsfundamentalnorm (pokok kaidah negara yang fundamental) yang menguasai hukum dasar tertulis maupun tidak tertulis.`,
+          `SALAH. Onrechtmatige daad adalah istilah hukum perdata untuk perbuatan melawan hukum.`,
+          `SALAH. Zaakwarneming adalah istilah hukum perdata mengenai pengurusan kepentingan orang lain tanpa perintah.`
+        ]
+      },
+      {
+        m: 3, kb: 1, no: 9,
+        q: `Realisasi Pancasila harus memiliki pengetahuan yang jelas dan benar tentang fungsi dan kedudukan Pancasila. Hal ini disebut ....`,
+        opts: [
+          `realisasi Pancasila secara konkret`,
+          `realisasi Pancasila secara menyeluruh`,
+          `realisasi Pancasila sesuai dengan perkembangan zaman`,
+          `realisasi Pancasila secara ideal`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Pelaksanaan nyata Pancasila dalam praktik bernegara dan bermasyarakat dengan pemahaman fungsi serta kedudukannya yang tepat disebut realisasi Pancasila secara konkret (objektif maupun subjektif).`,
+          `SALAH. Menyeluruh lebih merujuk pada cakupan keseluruhan sila yang bulat utuh.`,
+          `SALAH. Penyesuaian zaman merupakan sifat keterbukaan ideologi Pancasila.`,
+          `SALAH. Realisasi ideal belum menyentuh tataran praksis yang membutuhkan pemahaman operasional konkret.`
+        ]
+      },
+      {
+        m: 3, kb: 1, no: 10,
+        q: `Sikap positif yang perlu dikembangkan sebagai pengamalan nilai-nilai Pancasila. Contoh sikap positif tersebut yaitu ....`,
+        opts: [
+          `selalu mengikuti perkembangan budaya asing`,
+          `bergaya hidup individualistik`,
+          `menaati norma dan peraturan yang berlaku`,
+          `pantang menyerah kalau keinginan belum tercapai`,
+          `senang dengan pujian orang asing`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Mengikuti budaya asing tanpa saringan dapat mengikis jati diri bangsa.`,
+          `SALAH. Gaya hidup individualistik bertentangan dengan semangat gotong royong dan kebersamaan.`,
+          `BENAR. Menaati norma sosial dan hukum yang berlaku merupakan perwujudan nyata kesadaran warga negara Pancasilais.`,
+          `SALAH. Pantang menyerah demi keinginan pribadi tanpa koridor etika belum mencerminkan nilai sosial Pancasila.`,
+          `SALAH. Berorientasi pada pujian pihak asing tidak relevan dengan internalisasi nilai luhur bangsa.`
+        ]
+      },
+
+      // ================= MODUL 3 - TES FORMATIF 2 (No. 3-10 dalam teks sumber) =================
+      {
+        m: 3, kb: 2, no: 3,
+        q: `Pancasila sebagai jiwa bangsa Indonesia lahir bersamaan dengan adanya bangsa Indonesia sendiri sejak zaman dahulu kala, Pancasila telah ada sejak adanya bangsa Indonesia yang memberikan corak khas kepada bangsa Indonesia yang tak dapat dipisahkan dari bangsa Indonesia, serta sebagai pembeda dengan bangsa yang lain merupakan fungsi Pancasila sebagai ....`,
+        opts: [
+          `pandangan hidup bangsa Indonesia`,
+          `Pancasila sebagai jiwa bangsa Indonesia`,
+          `Pancasila sebagai kepribadian bangsa Indonesia`,
+          `Pancasila sebagai sistem etika`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Pandangan hidup berfokus pada acuan/pedoman dalam berpikir dan bertindak sehari-hari.`,
+          `SALAH. Meski kalimat awal menyebut "jiwa bangsa", penekanan "memberikan corak khas serta sebagai pembeda dengan bangsa yang lain" dalam Modul 3 KB 2 adalah definisi kepribadian bangsa Indonesia.`,
+          `BENAR. Kepribadian bangsa Indonesia berarti Pancasila memberi ciri dan corak khas yang membedakan jati diri bangsa Indonesia dari bangsa-bangsa lain.`,
+          `SALAH. Sistem etika merujuk pada pedoman normatif baik-buruk perilaku.`
+        ]
+      },
+      {
+        m: 3, kb: 2, no: 4,
+        q: `Pancasila merupakan perjanjian luhur yang telah disepakati secara nasional sebagai dasar negara pada tanggal 18 Agustus 1945 pada sidang PPKI (Panitia Persiapan Kemerdekaan Indonesia), merupakan fungsi Pancasila sebagai ....`,
+        opts: [
+          `pandangan hidup bangsa Indonesia`,
+          `jiwa bangsa Indonesia`,
+          `kepribadian bangsa Indonesia`,
+          `perjanjian luhur`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Pandangan hidup tidak merujuk secara spesifik pada konsensus penetapan 18 Agustus 1945.`,
+          `SALAH. Jiwa bangsa merujuk pada eksistensi kultural bangsa sejak lama.`,
+          `SALAH. Kepribadian bangsa menekankan identitas khas bangsa.`,
+          `BENAR. Konsensus nasional para pendiri bangsa pada sidang PPKI 18 Agustus 1945 menempatkan Pancasila sebagai perjanjian luhur bangsa Indonesia.`
+        ]
+      },
+      {
+        m: 3, kb: 2, no: 5,
+        q: `Kita mengenal nilai dasar, nilai instrumental, dan nilai praksis. Pernyataan yang berisi nilai-nilai dasar di bawah ini adalah ....`,
+        opts: [
+          `Undang-Undang Dasar 1945`,
+          `Batang Tubuh UUD 1945`,
+          `Pembukaan UUD 1945`,
+          `Penjelasan UUD 1945`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. UUD 1945 secara keseluruhan mencakup pasal-pasal yang merupakan nilai instrumental.`,
+          `SALAH. Batang Tubuh (pasal-pasal) UUD 1945 merupakan penjabaran nilai instrumental.`,
+          `BENAR. Nilai dasar Pancasila yang bersifat tetap dan universal termuat secara autentik di dalam Pembukaan UUD 1945 alinea keempat.`,
+          `SALAH. Penjelasan UUD 1945 (sebelum amandemen) adalah tafsiran resmi pasal-pasal, bukan sumber nilai dasar.`
+        ]
+      },
+      {
+        m: 3, kb: 2, no: 6,
+        q: `Pengertian Pancasila dalam sejarah bangsa Indonesia menunjukkan hal-hal sebagai berikut, kecuali ....`,
+        opts: [
+          `Pancasila merupakan produk otentik pendiri negara Indonesia (the founding fathers)`,
+          `merupakan hasil usulan dari salah satu anggota BPUPKI`,
+          `nilai-nilai Pancasila bersumber dan digali dari nilai agama, kebudayaan, dan adat istiadat`,
+          `Pancasila merupakan pandangan hidup bangsa dan dasar filsafat kenegaraan`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Pernyataan ini benar sesuai rangkuman sejarah Pancasila dalam modul.`,
+          `BENAR. Pancasila bukanlah karya tunggal satu individu semata, melainkan hasil pergulatan pemikiran dan konsensus bersama para pendiri bangsa di BPUPK, Panitia Sembilan, hingga PPKI.`,
+          `SALAH. Pernyataan ini benar bahwa nilai Pancasila digali dari budaya, adat, dan agama bangsa Indonesia.`,
+          `SALAH. Pernyataan ini benar sesuai kedudukan historis dan konstitusional Pancasila.`
+        ]
+      },
+      {
+        m: 3, kb: 2, no: 7,
+        q: `Pada tanggal berapakah Pancasila ditetapkan sebagai dasar Negara Republik Indonesia?`,
+        opts: [`18 Agustus 1945.`, `2 Juni 1945.`, `17 Agustus 1945.`, `1 Juni 1945.`],
+        ans: 0,
+        exp: [
+          `BENAR. Pancasila disahkan secara resmi sebagai dasar negara bersama Pembukaan dan Batang Tubuh UUD 1945 oleh PPKI pada tanggal 18 Agustus 1945.`,
+          `SALAH. 2 Juni 1945 adalah awal masa reses sidang pertama BPUPK.`,
+          `SALAH. 17 Agustus 1945 adalah hari Proklamasi Kemerdekaan Indonesia.`,
+          `SALAH. 1 Juni 1945 adalah hari lahirnya gagasan/istilah Pancasila oleh Bung Karno, sebelum penetapan konstitusional.`
+        ]
+      },
+      {
+        m: 3, kb: 2, no: 8,
+        q: `Secara harfiah istilah filsafat mengandung makna cinta akan ....`,
+        opts: [`kejujuran`, `kebenaran`, `kebijaksanaan`, `kemewahan`],
+        ans: 2,
+        exp: [
+          `SALAH. Kejujuran adalah salah satu nilai moral, bukan arti etimologis "philosophia".`,
+          `SALAH. Kebenaran adalah tujuan pencarian filsafat, tetapi terjemahan harfiah "sophia" adalah hikmat/kebijaksanaan.`,
+          `BENAR. Filsafat berasal dari kata Yunani "philos" (cinta) dan "sophia" (kebijaksanaan/hikmat), sehingga bermakna cinta akan kebijaksanaan.`,
+          `SALAH. Kemewahan bertolak belakang dengan perenungan hakiki filsafat.`
+        ]
+      },
+      {
+        m: 3, kb: 2, no: 9,
+        q: `Rumusan teks Pancasila yang tercantum di dalam "Piagam Jakarta" pada tanggal 22 Juni 1945 tersebut disetujui oleh ....`,
+        opts: [`BPUPKI`, `Pemerintah Jepang`, `PPKI`, `Panitia Sembilan`],
+        ans: 3,
+        exp: [
+          `SALAH. BPUPKI baru membahasnya secara pleno pada masa sidang kedua di bulan Juli 1945.`,
+          `SALAH. Pemerintah Jepang tidak merumuskan atau mengesahkan Piagam Jakarta.`,
+          `SALAH. PPKI baru dibentuk pada 9 Agustus 1945.`,
+          `BENAR. Naskah Piagam Jakarta (22 Juni 1945) dirumuskan dan ditandatangani oleh sembilan tokoh yang tergabung dalam Panitia Sembilan.`
+        ]
+      },
+      {
+        m: 3, kb: 2, no: 10,
+        q: `Berikut tokoh-tokoh yang merupakan bagian dari Tim Sembilan, kecuali ....`,
+        opts: [`Ir. Soekarno`, `Moh. Hatta`, `Moh. Yamin`, `Bung Tomo`],
+        ans: 3,
+        exp: [
+          `SALAH. Ir. Soekarno adalah Ketua Panitia Sembilan.`,
+          `SALAH. Drs. Moh. Hatta merupakan anggota inti Panitia Sembilan.`,
+          `SALAH. Mr. Muhammad Yamin adalah anggota Panitia Sembilan yang memopulerkan nama Piagam Jakarta.`,
+          `BENAR. Bung Tomo (Sutomo) adalah tokoh penggerak perjuangan rakyat di Surabaya, bukan anggota Panitia Sembilan.`
+        ]
+      },
+
+      // ================= MODUL 4 - TES FORMATIF 1 (No. 1, 2, 3, 6, 7, 8, 9, 10) =================
+      {
+        m: 4, kb: 1, no: 1,
+        q: `Dasar negara yang dimiliki oleh suatu bangsa biasanya bersumber dari ciri-ciri khas bangsa bersangkutan. Hal itu sering disebut ....`,
+        opts: [
+          `pandangan hidup bangsa`,
+          `pedoman hidup bangsa`,
+          `kepribadian bangsa`,
+          `ideologi negara`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Ciri khas nilai, adat, dan keyakinan suatu bangsa yang dijadikan acuan bernegara berakar pada pandangan hidup bangsa (Weltanschauung).`,
+          `SALAH. Pedoman hidup lebih menekankan aspek instruksi operasional perilaku.`,
+          `SALAH. Kepribadian bangsa menonjolkan pembeda identitas dengan bangsa lain.`,
+          `SALAH. Ideologi negara adalah sistem gagasan formal kenegaraan yang berakar dari pandangan hidup tersebut.`
+        ]
+      },
+      {
+        m: 4, kb: 1, no: 2,
+        q: `Dalam hal menyaring budaya asing maka kedudukan Pancasila berfungsi sebagai ....`,
+        opts: [
+          `perjanjian luhur bangsa`,
+          `dasar negara Indonesia`,
+          `etika hidup bangsa`,
+          `jiwa dan kepribadian bangsa`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Perjanjian luhur merujuk pada kesepakatan pendiri bangsa tanggal 18 Agustus 1945.`,
+          `SALAH. Dasar negara berfokus pada fondasi ketatanegaraan dan hukum.`,
+          `SALAH. Etika hidup mengatur tata moral warga negara.`,
+          `BENAR. Sebagai jiwa dan kepribadian bangsa, Pancasila berperan menjadi penyaring (filter) terhadap masuknya budaya asing agar tidak menggerus jati diri bangsa.`
+        ]
+      },
+      {
+        m: 4, kb: 1, no: 3,
+        q: `Pancasila dilaksanakan secara objektif, artinya Pancasila digunakan sebagai ....`,
+        opts: [
+          `pedoman perilaku sehari-hari`,
+          `asas tunggal partai politik`,
+          `sumber hukum negara`,
+          `dasar hukum penyelenggaraan bangsa`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Pelaksanaan Pancasila sebagai pedoman sikap dan perilaku pribadi/sehari-hari disebut pelaksanaan secara subjektif.`,
+          `SALAH. Asas tunggal partai politik merupakan kebijakan historis masa Orde Baru.`,
+          `BENAR. Pelaksanaan Pancasila secara objektif berarti merealisasikan nilai-nilai Pancasila dalam setiap peraturan perundang-undangan dan tata hukum negara (sumber hukum negara).`,
+          `SALAH. Redaksi baku hukum tata negara untuk pelaksanaan objektif adalah Pancasila sebagai sumber segala sumber hukum negara.`
+        ]
+      },
+      {
+        m: 4, kb: 1, no: 6,
+        q: `Nilai-nilai yang terkandung dalam demokrasi Pancasila adalah sebagai berikut, kecuali ....`,
+        opts: [
+          `mengakui perbedaan pendapat`,
+          `menjunjung nilai persatuan dan kesatuan`,
+          `mengutamakan musyawarah untuk mufakat`,
+          `memberikan kebebasan individu seluas-luasnya`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Demokrasi Pancasila menghargai keragaman pandangan dan pendapat secara beradab.`,
+          `SALAH. Musyawarah dalam demokrasi Pancasila tetap menjaga persatuan nasional.`,
+          `SALAH. Mengutamakan musyawarah untuk mufakat adalah ciri utama Sila ke-4.`,
+          `BENAR. Kebebasan individu mutlak tanpa batas merupakan ciri paham liberalisme, bukan demokrasi Pancasila yang menyeimbangkan hak individu dan kepentingan bersama.`
+        ]
+      },
+      {
+        m: 4, kb: 1, no: 7,
+        q: `Nilai-nilai yang terkandung dalam Pancasila perlu dijabarkan dalam suatu sistem norma. Pancasila termuat dalam Pembukaan Undang-Undang Dasar Negara Republik Indonesia Tahun 1945 yang merupakan tertib hukum tertinggi dalam Negara Republik Indonesia serta merupakan pokok kaidah negara yang fundamental. Pancasila mampu dijabarkan ke dalam langkah-langkah yang bersifat operasional. Dalam hal ini Pancasila ditinjau dari dimensi ....`,
+        opts: [`idealisme`, `realitas`, `filosofi`, `normatif`],
+        ans: 3,
+        exp: [
+          `SALAH. Dimensi idealisme menekankan cita-cita luhur dan harapan masa depan bangsa.`,
+          `SALAH. Dimensi realitas menekankan bahwa nilai Pancasila hidup nyata dalam budaya masyarakat.`,
+          `SALAH. Filosofi bukan salah satu dari tiga dimensi ideologi terbuka (realitas, idealisme, normatif/fleksibilitas).`,
+          `BENAR. Penjabaran nilai Pancasila ke dalam sistem norma hukum tertulis mulai dari Pembukaan UUD 1945 hingga peraturan operasional menunjukkan dimensi normatif.`
+        ]
+      },
+      {
+        m: 4, kb: 1, no: 8,
+        q: `Ideologi yang menekankan pada kebebasan ekonomi oleh pihak swasta disebut ....`,
+        opts: [`sosialis`, `marxis`, `Pancasilais`, `kapitalis`],
+        ans: 3,
+        exp: [
+          `SALAH. Sosialisme menekankan kepemilikan kolektif atau peran dominan negara dalam ekonomi.`,
+          `SALAH. Marxisme mengkritik kepemilikan modal swasta dan memperjuangkan penghapusan kelas.`,
+          `SALAH. Ekonomi Pancasila berasaskan kekeluargaan dan keadilan sosial, bukan dominasi modal swasta bebas.`,
+          `BENAR. Kapitalisme merupakan sistem ekonomi yang bertumpu pada kepemilikan modal dan kebebasan berusaha oleh pihak swasta demi keuntungan pasar.`
+        ]
+      },
+      {
+        m: 4, kb: 1, no: 9,
+        q: `Ideologi yang menekankan pada kebebasan individu secara mutlak disebut ....`,
+        opts: [`liberalis`, `komunis`, `kapitalis`, `sosialis`],
+        ans: 0,
+        exp: [
+          `BENAR. Liberalisme menempatkan kebebasan dan otonomi individu secara mutlak di atas kepentingan kolektif.`,
+          `SALAH. Komunisme menekan kebebasan individu demi kolektivitas partai/negara.`,
+          `SALAH. Kapitalisme lebih merujuk pada sistem ekonomi pasar dan kepemilikan modal swasta.`,
+          `SALAH. Sosialisme mengedepankan kesetaraan dan kepentingan sosial kolektif.`
+        ]
+      },
+      {
+        m: 4, kb: 1, no: 10,
+        q: `Melakukan pelarangan terhadap pandangan ekstrem yang menggelisahkan masyarakat dan penerimaan norma yang baru melalui konsensus merupakan bentuk perwujudan ....`,
+        opts: [
+          `keterbukaan ideologi Pancasila`,
+          `kemajuan teknologi bangsa`,
+          `rendahnya peradaban bangsa`,
+          `ketertinggalan budaya bangsa`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Dalam Modul 4 KB 1 & 2, melarang paham ekstrem yang meresahkan dan menerima norma baru lewat konsensus merupakan rambu-rambu keterbukaan ideologi Pancasila.`,
+          `SALAH. Hal ini adalah prinsip tata kelola ideologi politik, bukan sekadar kemajuan teknologi.`,
+          `SALAH. Menjaga stabilitas dinamis melalui konsensus justru menunjukkan kedewasaan berbangsa.`,
+          `SALAH. Penolakan ekstremisme bukan tanda ketertinggalan, melainkan perlindungan keutuhan bangsa.`
+        ]
+      },
+
+      // ================= MODUL 4 - TES FORMATIF 2 (No. 1, 2, 4, 5, 6, 7, 8, 9, 10) =================
+      {
+        m: 4, kb: 2, no: 1,
+        q: `Bangsa Indonesia bangga mempunyai ideologi berupa Pancasila dengan alasan ....`,
+        opts: [
+          `sesuai dengan perkembangan dan pertumbuhan masyarakat`,
+          `mampu mempersatukan bangsa Indonesia yang majemuk`,
+          `setiap rencana perebutan kekuasaan dapat digagalkan`,
+          `dapat menyelesaikan segala masalah di tanah air`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Penyesuaian perkembangan adalah sifat fleksibilitas, sedangkan keunggulan historis utamanya adalah menyatukan kemajemukan.`,
+          `BENAR. Sesuai Modul 4, di tengah keragaman suku, agama, ras, dan budaya Indonesia, fungsi sentral ideologi Pancasila adalah mempersatukan bangsa yang majemuk.`,
+          `SALAH. Ideologi bukan satu-satunya instrumen teknis keamanan negara.`,
+          `SALAH. Pancasila adalah pedoman dasar, penyelesaian masalah tetap membutuhkan kerja nyata pemerintah dan warga.`
+        ]
+      },
+      {
+        m: 4, kb: 2, no: 2,
+        q: `Suatu negara tidak akan dapat berdiri kokoh, bahkan mudah goyah oleh berbagai tantangan dan persoalan kehidupan berbangsa dan bernegara jika ....`,
+        opts: [
+          `negara tersebut makmur`,
+          `tidak mempunyai ideologi`,
+          `tidak mempunyai pengetahuan tentang ketatanegaraan`,
+          `mempunyai sejarah pahit`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Kemakmuran justru memperkuat ketahanan suatu negara.`,
+          `BENAR. Rangkuman Modul 4 KB 2 menegaskan bahwa tanpa ideologi yang jelas sebagai kompas dan pengikat cita-cita bersama, negara akan goyah dan kehilangan identitasnya.`,
+          `SALAH. Ilmu ketatanegaraan dapat dipelajari, tetapi ideologi merupakan roh pemersatu arah negara.`,
+          `SALAH. Sejarah pahit penjajahan justru sering memperkuat solidaritas kebangsaan.`
+        ]
+      },
+      {
+        m: 4, kb: 2, no: 4,
+        q: `Manfaat yang didapat jika suatu negara mempunyai ideologi negara yaitu supaya ....`,
+        opts: [
+          `tidak terpengaruh negara lain`,
+          `dapat mengantar bangsa dan negara mencapai cita-citanya`,
+          `dapat bersaing dengan negara lain`,
+          `menjadi negara yang baik`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Ideologi terbuka tetap berinteraksi secara sehat dengan dunia internasional tanpa menutup diri total.`,
+          `BENAR. Ideologi memberikan visi, arah normatif, dan orientasi tujuan untuk membimbing bangsa mencapai cita-cita nasionalnya.`,
+          `SALAH. Persaingan global adalah dampak sekunder, bukan manfaat hakiki ideologi negara.`,
+          `SALAH. "Menjadi negara yang baik" terlalu kabur dibanding pencapaian tujuan dan cita-cita bersama.`
+        ]
+      },
+      {
+        m: 4, kb: 2, no: 5,
+        q: `Perhatikan pernyataan berikut!\n(1) Berakar dari nilai-nilai yang berasal dari luar bangsanya.\n(2) Berakar dari hasil pemikiran dan gagasan seseorang.\n(3) Digali dan diambil dari kekayaan moral dan rohani budaya masyarakat itu sendiri.\n(4) Tidak diciptakan oleh negara, tetapi ditemukan oleh masyarakat sendiri.\nCiri khas ideologi terbuka ditunjukkan pernyataan nomor ....`,
+        opts: [`(1) dan (2)`, `(1) dan (3)`, `(2) dan (3)`, `(3) dan (4)`],
+        ans: 3,
+        exp: [
+          `SALAH. Pernyataan (1) dan (2) merupakan ciri ideologi tertutup atau doktriner hasil rekayasa elite/pemikiran luar.`,
+          `SALAH. Pernyataan (1) bertentangan dengan sifat asli ideologi terbuka.`,
+          `SALAH. Pernyataan (2) menggambarkan gagasan sepihak satu tokoh, bukan konsensus budaya masyarakat.`,
+          `BENAR. Ideologi terbuka seperti Pancasila digali dari kekayaan rohani, moral, dan budaya masyarakatnya sendiri (3) serta tumbuh dari masyarakat (4), bukan dipaksakan penguasa.`
+        ]
+      },
+      {
+        m: 4, kb: 2, no: 6,
+        q: `Makna Pancasila sebagai ideologi terbuka adalah ideologi yang ....`,
+        opts: [
+          `tidak dapat berinteraksi dengan perkembangan zaman`,
+          `dapat berinteraksi dengan perkembangan zaman`,
+          `mengandung semangat kekeluargaan`,
+          `mengandung adanya semangat kerja sama`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Tidak mampu berinteraksi dengan perkembangan zaman adalah ciri ideologi tertutup yang kaku.`,
+          `BENAR. Ideologi terbuka bersifat dinamis, aktual, dan mampu berinteraksi serta beradaptasi dengan perkembangan zaman tanpa mengubah nilai dasarnya.`,
+          `SALAH. Semangat kekeluargaan adalah isi substansi sosial Pancasila, bukan definisi "terbuka".`,
+          `SALAH. Kerja sama adalah sikap praksis, bukan makna teoretis keterbukaan ideologi.`
+        ]
+      },
+      {
+        m: 4, kb: 2, no: 7,
+        q: `Pancasila memuat nilai-nilai dan cita-cita yang bersifat mendasar dan tidak langsung bersifat operasional karena Pancasila sebagai ideologi ....`,
+        opts: [`nasional`, `pembangunan`, `terbuka`, `masa depan`],
+        ans: 2,
+        exp: [
+          `SALAH. Istilah "nasional" menekankan cakupan kebangsaan, bukan sifat ketidaklangsungan operasionalisasi nilai.`,
+          `SALAH. Ideologi pembangunan bersifat programatik.`,
+          `BENAR. Sebagai ideologi terbuka, Pancasila hanya menetapkan nilai-nilai dasar yang bersifat mendasar; penerjemahan operasionalnya dijabarkan melalui nilai instrumental dan praksis sesuai konteks zaman.`,
+          `SALAH. "Ideologi masa depan" bukan klasifikasi baku ilmu politik dalam modul.`
+        ]
+      },
+      {
+        m: 4, kb: 2, no: 8,
+        q: `Tujuan negara Indonesia yang bersifat internasional sebagaimana tertuang dalam Pembukaan UUD 1945 yaitu ....`,
+        opts: [
+          `mewujudkan kemerdekaan negara Indonesia dari cengkeraman penjajah demi kehormatan bangsa dan negara`,
+          `banyak menciptakan lapangan kerja dengan mengirim TKI ke luar negeri`,
+          `memajukan kesejahteraan umum dan mencerdaskan kehidupan bangsa`,
+          `ikut melaksanakan ketertiban dunia yang berdasarkan kemerdekaan, perdamaian abadi, dan keadilan sosial`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Pernyataan ini terkait perjuangan kemerdekaan nasional pada alinea 1 dan 2.`,
+          `SALAH. Pengiriman tenaga kerja adalah kebijakan ekonomi ketenagakerjaan, bukan rumusan Pembukaan UUD 1945.`,
+          `SALAH. Memajukan kesejahteraan umum dan mencerdaskan kehidupan bangsa adalah tujuan nasional yang bersifat ke dalam (domestik).`,
+          `BENAR. Alinea ke-4 Pembukaan UUD 1945 merumuskan tujuan internasional Indonesia secara tegas: "ikut melaksanakan ketertiban dunia yang berdasarkan kemerdekaan, perdamaian abadi dan keadilan sosial."`
+        ]
+      },
+      {
+        m: 4, kb: 2, no: 9,
+        q: `Perhatikan pernyataan berikut!\n(1) Stabilitas nasional yang dinamis.\n(2) Memasukkan pemikiran-pemikiran yang mengandung ideologi komunis.\n(3) Berkembangnya paham liberal.\n(4) Larangan terhadap pandangan ekstrem yang menggelisahkan masyarakat.\n(5) Penerimaan norma yang baru harus melalui konsensus.\nKeterbukaan ideologi Pancasila ditunjukkan oleh nomor ....`,
+        opts: [
+          `(1), (2), dan (3)`,
+          `(1), (4), dan (5)`,
+          `(2), (3), dan (4)`,
+          `(3), (4), dan (5)`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Paham komunis (2) dan liberal (3) justru dilarang dalam batas keterbukaan Pancasila.`,
+          `BENAR. Batas dan mekanisme keterbukaan ideologi Pancasila mencakup: menjaga stabilitas nasional yang dinamis (1), melarang pandangan ekstrem yang meresahkan (4), dan menerima norma baru melalui konsensus (5).`,
+          `SALAH. Nomor (2) dan (3) bertentangan dengan batas ideologi Pancasila.`,
+          `SALAH. Nomor (3) tentang berkembangnya paham liberal ditolak oleh batas keterbukaan Pancasila.`
+        ]
+      },
+      {
+        m: 4, kb: 2, no: 10,
+        q: `Yang bukan merupakan batas dari keterbukaan Pancasila sebagai ideologi adalah ....`,
+        opts: [
+          `stabilitas nasional yang dinamis`,
+          `larangan terhadap ideologi marxisme, leninisme, komunisme`,
+          `mencegah berkembangnya paham liberalis`,
+          `penciptaan norma yang baru dari konsekuensi globalisasi`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Stabilitas nasional yang dinamis termasuk rambu/batas utama keterbukaan Pancasila.`,
+          `SALAH. Larangan ideologi Marxisme-Leninisme/Komunisme merupakan batas konstitusional ideologi Pancasila.`,
+          `SALAH. Mencegah berkembangnya paham liberalisme mutlak merupakan bagian dari batas keterbukaan.`,
+          `BENAR. Penciptaan norma baru harus melalui konsensus masyarakat/bangsa, bukan otomatis diterima mentah-mentah sebagai konsekuensi globalisasi (dan secara struktur daftar batas, ini bukan syarat pembatasnya).`
+        ]
+      },
+
+      // ================= MODUL 5 - TES FORMATIF 1 (1-10) =================
+      {
+        m: 5, kb: 1, no: 1,
+        q: `Secara etimologis, istilah filsafat berasal dari bahasa ....`,
+        opts: [`Inggris`, `Indonesia`, `Latin`, `Yunani`],
+        ans: 3,
+        exp: [
+          `SALAH. Dalam bahasa Inggris disebut "philosophy" yang diserap dari Yunani.`,
+          `SALAH. Bahasa Indonesia menyerap kata "filsafat" melalui tradisi Arab ("falsafah") yang berakar dari Yunani.`,
+          `SALAH. Bahasa Latin ("philosophia") juga mengadopsinya dari bahasa Yunani.`,
+          `BENAR. Istilah filsafat berasal dari bahasa Yunani Kuno, yaitu "philos" (cinta/sahabat) dan "sophia" (kebijaksanaan).`
+        ]
+      },
+      {
+        m: 5, kb: 1, no: 2,
+        q: `Objek material filsafat yang bersifat abstrak adalah ....`,
+        opts: [`ide`, `benda`, `tempat`, `lokasi`],
+        ans: 0,
+        exp: [
+          `BENAR. Objek material filsafat meliputi segala sesuatu yang ada, baik yang konkret maupun yang bersifat abstrak seperti ide, gagasan, dan nilai.`,
+          `SALAH. Benda fisik bersifat konkret dan empiris.`,
+          `SALAH. Tempat memiliki dimensi ruang yang konkret.`,
+          `SALAH. Lokasi merujuk pada posisi fisik tertentu, bukan konsep abstrak.`
+        ]
+      },
+      {
+        m: 5, kb: 1, no: 3,
+        q: `Berikut ini yang tidak termasuk ciri filsafat adalah ....`,
+        opts: [`universal`, `radikal`, `sistematis`, `mitologis`],
+        ans: 3,
+        exp: [
+          `SALAH. Filsafat bersifat universal (mencakup keseluruhan realitas).`,
+          `SALAH. Filsafat bersifat radikal (berpikir mendalam sampai ke akar-akarnya).`,
+          `SALAH. Filsafat bersifat sistematis (runtut dan saling berkaitan).`,
+          `BENAR. Filsafat lahir justru sebagai peralihan dari cara pikir mitologis (mitos) menuju pemikiran rasional-kritis (logos).`
+        ]
+      },
+      {
+        m: 5, kb: 1, no: 4,
+        q: `Berikut ini yang tidak termasuk ciri-ciri berpikir filsafat adalah ....`,
+        opts: [`universal`, `konseptual`, `koheren`, `rasional`],
+        ans: 0,
+        exp: [
+          `BENAR. Dalam klasifikasi ciri berpikir filsafat pada Modul 5 KB 1, ciri berpikir filsafat ditekankan pada sifat kritis, konseptual, koheren, rasional, dan komprehensif/radikal (dalam konteks soal BMP ini "universal" diposisikan sebagai ciri filsafat secara umum, bukan butir ciri berpikir filsafat di opsi lain).`,
+          `SALAH. Konseptual adalah ciri khas berpikir filsafat yang merumuskan gagasan secara abstrak.`,
+          `SALAH. Koheren berarti pemikiran filsafat runtut dan tidak saling bertentangan.`,
+          `SALAH. Rasional berarti berpikir filsafat berlandaskan logika akal sehat.`
+        ]
+      },
+      {
+        m: 5, kb: 1, no: 5,
+        q: `Filsafat muncul dan berkembang karena berkembangnya pengetahuan dan pemikiran kritis. Titik tolak lahirnya filsafat karena ....`,
+        opts: [
+          `adanya banyak pemikir`,
+          `adanya pemikiran kritis`,
+          `kemenangan logos atas mitos`,
+          `adanya buku ajar`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Banyaknya pemikir adalah dampak berkembangnya tradisi berfilsafat, bukan titik tolak historisnya.`,
+          `SALAH. Pemikiran kritis adalah instrumennya, sedangkan ungkapan historis kelahiran filsafat Yunani adalah pergeseran dari mitos ke logos.`,
+          `BENAR. Dalam sejarah filsafat (Modul 5 KB 1), titik tolak lahirnya filsafat ditandai oleh "kemenangan logos atas mitos" — ketika manusia mulai menjelaskan alam dengan akal budi alih-alih dongeng dewa.`,
+          `SALAH. Buku ajar baru muncul jauh setelah tradisi filsafat berkembang.`
+        ]
+      },
+      {
+        m: 5, kb: 1, no: 6,
+        q: `Berikut ini yang tidak termasuk ciri sistem ....`,
+        opts: [
+          `suatu kesatuan dari bagian-bagian`,
+          `saling berhubungan dan saling ketergantungan`,
+          `terjadi dalam konteks ruang dan waktu tertentu`,
+          `menyatu`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Suatu sistem pasti terdiri atas kesatuan bagian-bagian atau subsistem.`,
+          `SALAH. Unsur-unsur dalam sistem saling berhubungan, berinteraksi, dan bergantung.`,
+          `SALAH. Sistem bekerja dalam ruang, waktu, dan lingkungan tertentu untuk mencapai tujuan.`,
+          `BENAR. "Menyatu" secara melebur hingga menghilangkan fungsi masing-masing bagian bukan merupakan ciri teoretis sistem (bagian-bagian sistem tetap dapat dibedakan meski membentuk kesatuan).`
+        ]
+      },
+      {
+        m: 5, kb: 1, no: 7,
+        q: `Berikut ini yang tidak termasuk dalam kategori pengetahuan ....`,
+        opts: [`umum`, `kritis`, `agama`, `ilmiah`],
+        ans: 1,
+        exp: [
+          `SALAH. Pengetahuan umum (biasa/common sense) termasuk kategori pengetahuan.`,
+          `BENAR. Dalam pembagian kategori pengetahuan di Modul 5 KB 1, jenis pengetahuan meliputi pengetahuan biasa/umum, pengetahuan ilmiah, pengetahuan filsafat, dan pengetahuan agama — "kritis" adalah sikap berpikir, bukan kategori pengetahuan.`,
+          `SALAH. Pengetahuan agama bersumber pada wahyu dan keyakinan iman.`,
+          `SALAH. Pengetahuan ilmiah diperoleh melalui metode riset yang sistematis.`
+        ]
+      },
+      {
+        m: 5, kb: 1, no: 8,
+        q: `Makna dan fungsi filsafat sebagai sistem pengetahuan ialah ....`,
+        opts: [
+          `mendapatkan pengetahuan yang memadai`,
+          `dapat berpikir maksimal`,
+          `untuk memberikan pemahaman pengetahuan yang objektif`,
+          `mampu berpikir dan bersikap kritis`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Terlalu umum dan belum menyentuh esensi reflektif filsafat.`,
+          `SALAH. "Berpikir maksimal" tidak menggambarkan fungsi metodologis filsafat.`,
+          `SALAH. Objektivitas semata lebih dekat kepada ciri ilmu empiris.`,
+          `BENAR. Filsafat sebagai sistem pengetahuan berfungsi melatih manusia mampu berpikir dan bersikap kritis, mendalam, serta bijaksana dalam menelaah realitas.`
+        ]
+      },
+      {
+        m: 5, kb: 1, no: 9,
+        q: `Pengetahuan ilmiah diartikan sebagai pengetahuan yang ....`,
+        opts: [
+          `pengetahuan yang diperoleh dari proses ilmiah dengan menggunakan metode tertentu untuk melakukan sistematisasi dan konseptualisasi pengetahuan biasa menjadi ilmu`,
+          `dilakukan dengan proses perenungan dan penelitian`,
+          `dilakukan oleh para ilmuwan`,
+          `dilakukan di laboratorium`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Definisi pengetahuan ilmiah mencakup proses sistematisasi dan konseptualisasi pengetahuan biasa melalui metode ilmiah sehingga menjadi ilmu yang teruji.`,
+          `SALAH. "Perenungan" lebih identik dengan metode filsafat daripada metode empiris ilmiah.`,
+          `SALAH. Definisi pengetahuan tidak ditentukan semata oleh pelakunya, melainkan metode dan validitasnya.`,
+          `SALAH. Tidak semua ilmu (seperti ilmu sosial dan humaniora) dikerjakan di laboratorium fisik.`
+        ]
+      },
+      {
+        m: 5, kb: 1, no: 10,
+        q: `Perkembangan pemikiran dan ilmu pengetahuan sudah semakin masif di abad ke-21 ini dan oleh karena itu filsafat tetap diperlukan untuk menjawab persoalan-persoalan kehidupan manusia. Berdasarkan pernyataan ini, dapat diketahui bahwa filsafat bersifat ....`,
+        opts: [`aktual`, `teoritis`, `kontekstual`, `rasial`],
+        ans: 0,
+        exp: [
+          `BENAR. Karena tetap relevan menjawab persoalan kehidupan manusia masa kini di abad ke-21, filsafat memiliki sifat aktual.`,
+          `SALAH. Sifat teoritis tidak menjelaskan mengapa ia terus dibutuhkan di abad ke-21.`,
+          `SALAH. Kontekstual menekankan keterikatan situasi tertentu, sedangkan pernyataan ini menyoroti relevansi terkini sepanjang zaman (aktual).`,
+          `SALAH. "Rasial" jelas salah dan tidak berkaitan dengan sifat keilmuan filsafat.`
+        ]
+      },
+
+      // ================= MODUL 5 - TES FORMATIF 2 (No. 1, 6, 7, 8 dalam teks sumber) =================
+      {
+        m: 5, kb: 2, no: 1,
+        q: `"Pancasila memiliki nilai simbolik, bahwa untuk membentuk negara Indonesia yang merdeka perlu memiliki dasar negara yang mengandung nilai-nilai filosofis dan bersatunya suku-suku bangsa yang mendiami wilayah Indonesia". Pernyataan tersebut memiliki nilai simbolik yang terdapat di dalam sila ke- ....`,
+        opts: [`1`, `2`, `3`, `4`],
+        ans: 2,
+        exp: [
+          `SALAH. Sila ke-1 berkaitan dengan dimensi Ketuhanan dan religiositas.`,
+          `SALAH. Sila ke-2 berkaitan dengan kemanusiaan dan pengakuan hak asasi manusia.`,
+          `BENAR. Penekanan pada "bersatunya suku-suku bangsa yang mendiami wilayah Indonesia" merujuk langsung pada nilai Sila ke-3: Persatuan Indonesia.`,
+          `SALAH. Sila ke-4 berkaitan dengan demokrasi permusyawaratan dan perwakilan.`
+        ]
+      },
+      {
+        m: 5, kb: 2, no: 6,
+        q: `Pancasila sebagai sistem filsafat memiliki tiga landasan nilai yaitu nilai ....`,
+        opts: [
+          `sosial, budaya, ekonomi`,
+          `dasar, budaya, dan sosial`,
+          `dasar, instrumental, dan praksis`,
+          `dasar, budaya, dan instrumental`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Sosial, budaya, dan ekonomi adalah bidang kehidupan masyarakat, bukan klasifikasi landasan nilai Pancasila.`,
+          `SALAH. Budaya dan sosial bukan tingkatan norma nilai dalam ajaran filsafat Pancasila.`,
+          `BENAR. Sesuai Subbab D Modul 5 KB 2 ("Pancasila sebagai Nilai"), tiga landasan nilai Pancasila adalah nilai dasar, nilai instrumental, dan nilai praksis.`,
+          `SALAH. Nilai budaya tidak menggantikan kedudukan nilai praksis.`
+        ]
+      },
+      {
+        m: 5, kb: 2, no: 7,
+        q: `Unsur-unsur dalam sila-sila Pancasila telah ditemukan dalam kehidupan berbangsa dan bernegara, kecuali ....`,
+        opts: [`budaya`, `adat istiadat`, `tradisi`, `estetika`],
+        ans: 3,
+        exp: [
+          `SALAH. Budaya bangsa merupakan salah satu sumber material utama Pancasila.`,
+          `SALAH. Adat istiadat Nusantara sejak lama telah mempraktikkan nilai Pancasila (causa materialis).`,
+          `SALAH. Tradisi masyarakat seperti musyawarah dan gotong royong menjadi akar nilai Pancasila.`,
+          `BENAR. Estetika adalah cabang filsafat tentang keindahan, bukan unsur historis-sosiologis sumber nilai sila Pancasila (yang disebut adalah adat istiadat, kebudayaan, tradisi, dan agama).`
+        ]
+      },
+      {
+        m: 5, kb: 2, no: 8,
+        q: `Yang menyangkut kenyataan objektif dari Pancasila ialah Pancasila ....`,
+        opts: [
+          `sebagai jati diri bangsa`,
+          `adalah milik bangsa Indonesia`,
+          `sebagai realitas yang melekat dalam sejarah berdirinya bangsa`,
+          `sebagai produk hukum semata`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Jati diri bangsa lebih merujuk pada aspek kepribadian dan karakter nasional.`,
+          `SALAH. Kepemilikan bersifat umum dan belum menjelaskan makna kenyataan objektif secara filsafati.`,
+          `BENAR. Dalam Subbab D Modul 5 KB 2 ("Pancasila sebagai Realitas"), kenyataan objektif berarti keberadaan Pancasila melekat nyata dalam ruang, waktu, dan proses sejarah panjang berdirinya bangsa Indonesia.`,
+          `SALAH. Pancasila tidak sekadar produk hukum semata, melainkan realitas kultural-filosofis yang hidup.`
+        ]
+      },
+
+      // ================= MODUL 6 - TES FORMATIF 1 (No. 1, 2, 3, 4, 5, 8, 9, 10 dalam teks sumber) =================
+      {
+        m: 6, kb: 1, no: 1,
+        q: `Pancasila merupakan paradigma pembangunan, artinya Pancasila berisi anggapan-anggapan dasar yang merupakan kerangka keyakinan. Adapun kerangka keyakinan tersebut berfungsi sebagai ....`,
+        opts: [
+          `acuan atau pedoman dalam perencanaan, pelaksanaan, pengawasan, dan pemanfaatan hasil-hasil pembangunan`,
+          `tolok ukur dalam mengembangkan dan kajian dalam rangka menyukseskan proses pembangunan nasional`,
+          `pegangan bagi para pelaksana dan pengguna serta upaya pemeliharaan hasil-hasil pembangunan di segala bidang`,
+          `penjamin mutu atau kualitas hasil-hasil pembangunan untuk meningkatkan sumber daya manusia`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Paradigma pembangunan menempatkan Pancasila sebagai kerangka acuan komprehensif mulai dari tahap perencanaan, pelaksanaan, pengawasan, hingga pemanfaatan hasil pembangunan nasional.`,
+          `SALAH. Hanya menyoroti aspek kajian, belum mencakup siklus utuh perencanaan hingga pemanfaatan pembangunan.`,
+          `SALAH. Terbatas pada pelaksana dan pemeliharaan, tidak memuat tahap perencanaan dan pengawasan.`,
+          `SALAH. Penjamin mutu SDM adalah satu bagian kecil, bukan definisi paradigma pembangunan nasional.`
+        ]
+      },
+      {
+        m: 6, kb: 1, no: 2,
+        q: `Sebagai paradigma pembangunan, Pancasila mempunyai kedudukan sebagai berikut, kecuali ....`,
+        opts: [
+          `cita-cita bangsa Indonesia`,
+          `jiwa bangsa`,
+          `moral pembangunan`,
+          `menghormati HAM`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Pancasila berkedudukan sebagai cita-cita dan tujuan pembangunan nasional.`,
+          `SALAH. Pancasila merupakan jiwa bangsa yang menjiwai arah pembangunan.`,
+          `SALAH. Pancasila berfungsi sebagai moral pembangunan agar tidak menyimpang dari nilai etis.`,
+          `BENAR. "Menghormati HAM" adalah prinsip/syarat pelaksanaan pembangunan (bersama non-pragmatis, non-ideologis kaku, dan demokratis), bukan sebutan kedudukan Pancasila itu sendiri.`
+        ]
+      },
+      {
+        m: 6, kb: 1, no: 3,
+        q: `Paradigma adalah asumsi teoritis yang umum (merupakan suatu sumber nilai) yang merupakan sumber hukum, metode serta cara penerapan dalam ilmu pengetahuan sehingga sangat menentukan sifat ciri dan karakter ilmu pengetahuan tersebut merupakan pendapat dari ....`,
+        opts: [
+          `George Alexander Louis`,
+          `Max Weber`,
+          `Miriam Budiardjo`,
+          `Thomas S. Kuhn`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Bukan tokoh pencetus konsep paradigma keilmuan modern tersebut.`,
+          `SALAH. Max Weber terkenal dalam sosiologi tindakan sosial dan birokrasi.`,
+          `SALAH. Miriam Budiardjo adalah pakar ilmu politik Indonesia.`,
+          `BENAR. Thomas S. Kuhn melalui karyanya "The Structure of Scientific Revolutions" adalah tokoh yang memopulerkan definisi paradigma sebagai kerangka acuan dasar dalam perkembangan ilmu pengetahuan.`
+        ]
+      },
+      {
+        m: 6, kb: 1, no: 4,
+        q: `Berikut ini yang bukan merupakan nilai yang sudah dipegang teguh masyarakat di kawasan Nusantara adalah ....`,
+        opts: [
+          `percaya kepada Tuhan dan toleran`,
+          `gotong royong`,
+          `berperilaku tidak adil`,
+          `musyawarah`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Kepercayaan kepada Tuhan dan toleransi sudah mengakar dalam masyarakat Nusantara.`,
+          `SALAH. Gotong royong adalah nilai asli kebersamaan masyarakat Nusantara.`,
+          `BENAR. Berperilaku tidak adil jelas bertentangan dengan nilai luhur Nusantara dan Sila ke-2 serta Sila ke-5.`,
+          `SALAH. Musyawarah mufakat merupakan tradisi pengambilan keputusan masyarakat Nusantara.`
+        ]
+      },
+      {
+        m: 6, kb: 1, no: 5,
+        q: `Nilai-nilai Pancasila sudah terwujud dalam kehidupan bermasyarakat sebelum Pancasila sebagai dasar negara dirumuskan. Hal ini berkaitan dengan nilai Pancasila sebagai ....`,
+        opts: [
+          `pedoman hidup bangsa`,
+          `pandangan hidup bangsa`,
+          `jiwa bangsa`,
+          `ideologi terbuka`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Pedoman hidup lebih merujuk pada aturan normatif setelah perumusan.`,
+          `BENAR. Sebelum dirumuskan secara formal oleh BPUPK/PPKI, nilai-nilai Pancasila sudah hidup dan dipraktikkan sebagai pandangan hidup bangsa Indonesia.`,
+          `SALAH. Dalam klasifikasi asal mula bahan (causa materialis) di modul, praktik nilai dalam masyarakat sebelum merdeka identik dengan pandangan hidup bangsa.`,
+          `SALAH. Ideologi terbuka merujuk pada sifat adaptif Pancasila pasca-penetapan.`
+        ]
+      },
+      {
+        m: 6, kb: 1, no: 8,
+        q: `Etika merupakan kata yang berasal dari Yunani yakni ethos, yang tidak termasuk arti kata ethos adalah ....`,
+        opts: [
+          `tempat tinggal yang biasa`,
+          `cara berpikir`,
+          `kebiasaan`,
+          `cara pandang`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Secara etimologis, ethos berarti tempat tinggal yang biasa, padang rumput, atau kandang.`,
+          `SALAH. Ethos dalam arti jamak/perkembangannya merujuk pula pada cara berpikir, watak, dan sikap batin.`,
+          `SALAH. Kebiasaan atau adat istiadat merupakan arti paling umum dari kata ethos.`,
+          `BENAR. "Cara pandang" lebih tepat menggambarkan istilah paradigma atau perspektif, bukan arti etimologis kata ethos.`
+        ]
+      },
+      {
+        m: 6, kb: 1, no: 9,
+        q: `Sikap atau kualitas yang melekat pada suatu objek adalah pengertian dari ....`,
+        opts: [`hukum`, `norma`, `etika`, `nilai`],
+        ans: 3,
+        exp: [
+          `SALAH. Hukum adalah seperangkat aturan tertulis yang memaksa dan bersanksi.`,
+          `SALAH. Norma adalah kaidah atau tolok ukur perilaku yang berlaku di masyarakat.`,
+          `SALAH. Etika adalah ilmu atau refleksi filosofis mengenai baik dan buruknya tindakan manusia.`,
+          `BENAR. Dalam aksiologi, nilai (value) diartikan sebagai sifat, harga, atau kualitas yang melekat pada suatu objek yang membuatnya berharga atau diinginkan.`
+        ]
+      },
+      {
+        m: 6, kb: 1, no: 10,
+        q: `Berhasilnya pembangunan nasional bergantung pada ....`,
+        opts: [
+          `banyaknya modal`,
+          `kepentingan presiden`,
+          `banyaknya para ahli`,
+          `partisipasi rakyat`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Modal penting secara finansial, tetapi tidak menjamin keberhasilan pembangunan yang demokratis dan merata.`,
+          `SALAH. Pembangunan berdasarkan Pancasila harus memenuhi kebutuhan rakyat, bukan kepentingan pribadi pemimpin.`,
+          `SALAH. Tenaga ahli membantu secara teknis, namun tujuan pembangunan melibatkan seluruh lapisan masyarakat.`,
+          `BENAR. Sesuai prinsip demokratis pembangunan dalam Modul 6 KB 1, pembangunan dilaksanakan dari rakyat, oleh rakyat, dan untuk rakyat sehingga keberhasilannya bergantung pada partisipasi aktif rakyat.`
+        ]
+      },
+
+      // ================= MODUL 6 - TES FORMATIF 2 (1-10) =================
+      {
+        m: 6, kb: 2, no: 1,
+        q: `Maksud dan tujuan adanya implementasi Pancasila dalam pembuatan kebijakan negara adalah, kecuali ....`,
+        opts: [
+          `mengembangkan pola pikir dan pola tindak berdasarkan konsep, prinsip, dan nilai yang terkandung dalam Pancasila`,
+          `mengembangkan sikap dan perilaku dalam mempertahankan dan menjaga kelestarian Pembukaan UUD 1945`,
+          `mengembangkan kemampuan mengoperasionalisasikan demokrasi dan HAM berdasarkan Pancasila`,
+          `mengembangkan kemampuan dalam penyusunan peraturan perundang-undangan yang sejalan dan tidak bertentangan dengan Pancasila sebagai dasar negara`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Mengembangkan pola pikir dan tindak berbasis nilai Pancasila adalah tujuan utama implementasi.`,
+          `BENAR. Mempertahankan kelestarian Pembukaan UUD 1945 adalah komitmen konstitusional umum, bukan secara spesifik fungsi teknis implementasi dalam proses perumusan kebijakan negara seperti tiga poin lainnya.`,
+          `SALAH. Operasionalisasi demokrasi dan HAM merupakan bagian dari kebijakan publik Pancasilais.`,
+          `SALAH. Harmonisasi peraturan perundang-undangan dengan Pancasila adalah tujuan inti kebijakan hukum negara.`
+        ]
+      },
+      {
+        m: 6, kb: 2, no: 2,
+        q: `Contoh implementasi Pancasila dalam pembuatan kebijakan negara berdasarkan pada sila kelima Pancasila adalah ....`,
+        opts: [
+          `pemerintah melakukan mediasi tanah Adat Bulukumba di kawasan pertambangan PT Nusa Halmahera Mineral`,
+          `kebijakan pemerintah dalam pengaturan beragama`,
+          `pemerintah memberikan pinjaman untuk masyarakat menengah ke bawah untuk membuat suatu usaha dalam rangka perbaikan kesejahteraan rakyat`,
+          `pemerintah mengirim kontingen Garuda sebanyak 27 kontingen ke berbagai negara`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Mediasi sengketa lebih mengedepankan musyawarah (Sila ke-4) dan perlindungan hak (Sila ke-2).`,
+          `SALAH. Pengaturan kehidupan beragama berkaitan langsung dengan Sila ke-1.`,
+          `BENAR. Pemberian akses permodalan/pinjaman usaha bagi masyarakat menengah ke bawah bertujuan mewujudkan pemerataan ekonomi dan kesejahteraan rakyat sesuai Sila ke-5.`,
+          `SALAH. Pengiriman pasukan perdamaian Garuda merupakan wujud kemanusiaan internasional sesuai Sila ke-2.`
+        ]
+      },
+      {
+        m: 6, kb: 2, no: 3,
+        q: `Contoh implementasi nilai religius Pancasila dalam praktik penyelenggaraan pemerintah yaitu ....`,
+        opts: [
+          `memberikan kesempatan kepada warga negara untuk tidak menganut agama`,
+          `membuat kebijakan hari libur nasional pada saat hari raya keagamaan`,
+          `mewajibkan warga negara menjadi umat agama yang baik`,
+          `membebaskan setiap orang membentuk agama sendiri`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Negara Pancasila berdasar Ketuhanan Yang Maha Esa sehingga tidak memberi ruang legal bagi paham ateisme.`,
+          `BENAR. Menetapkan hari libur nasional pada hari raya besar keagamaan merupakan bentuk penghormatan dan fasilitasi nyata negara agar pemeluk agama dapat beribadah dengan tenang.`,
+          `SALAH. Kualitas keimanan adalah ranah pribadi dan pemuka agama; negara menjamin kebebasan beribadah, bukan memaksa tingkat kesalehan.`,
+          `SALAH. Negara melindungi kebebasan memeluk agama dan kepercayaan yang diakui secara tertib, bukan mendorong penciptaan agama baru sembarangan.`
+        ]
+      },
+      {
+        m: 6, kb: 2, no: 4,
+        q: `Contoh pengamalan sila kedua adalah ....`,
+        opts: [
+          `taat menjalankan ibadah sesuai dengan kepercayaan`,
+          `memaksakan kehendak orang lain dalam kepentingan bersama`,
+          `menaati peraturan atau norma yang berlaku`,
+          `mengakui bahwa setiap warga negara Indonesia memiliki hak dan kewajiban yang sama`
+        ],
+        ans: 3,
+        exp: [
+          `SALAH. Taat beribadah adalah pengamalan utama Sila ke-1.`,
+          `SALAH. Memaksakan kehendak bertentangan dengan Sila ke-4 dan hak asasi manusia.`,
+          `SALAH. Ketaatan pada peraturan merupakan sikap warga negara umum (Sila ke-5/hukum).`,
+          `BENAR. Sila ke-2 (Kemanusiaan yang Adil dan Beradab) menekankan pengakuan kesetaraan martabat, hak, dan kewajiban setiap manusia tanpa diskriminasi.`
+        ]
+      },
+      {
+        m: 6, kb: 2, no: 5,
+        q: `Bagi bangsa Indonesia, pilihan yang tepat dalam menerapkan paham demokrasi adalah dengan menerapkan Demokrasi Pancasila. Paham Demokrasi Pancasila sesuai dengan kepribadian bangsa yang digali dari tata nilai sosial budaya sendiri. Hal ini telah dipraktikkan secara turun temurun jauh sebelum Indonesia merdeka. Kenyataan ini dapat kita lihat pada masyarakat desa yang menerapkan ....`,
+        opts: [`voting`, `kerja sama`, `sikap individual`, `musyawarah mufakat`],
+        ans: 3,
+        exp: [
+          `SALAH. Voting (suara terbanyak) hanyalah jalan terakhir apabila musyawarah tidak tercapai.`,
+          `SALAH. Kerja sama lebih dekat pada makna gotong royong secara umum, bukan mekanisme pengambilan keputusan demokratis.`,
+          `SALAH. Sikap individual bertentangan dengan nilai kekeluargaan demokrasi Pancasila.`,
+          `BENAR. Tradisi musyawarah untuk mencapai mufakat di desa-desa Nusantara merupakan akar historis-kultural dari Demokrasi Pancasila.`
+        ]
+      },
+      {
+        m: 6, kb: 2, no: 6,
+        q: `Pengamalan Bhinneka Tunggal Ika harus diterapkan dalam ....`,
+        opts: [
+          `kehidupan bermasyarakat dan bernegara`,
+          `kehidupan antarmasyarakat sesama suku`,
+          `kehidupan dengan rekan sejawat`,
+          `hubungan antarsesama mahasiswa`
+        ],
+        ans: 0,
+        exp: [
+          `BENAR. Semboyan Bhinneka Tunggal Ika berlaku menyeluruh bagi seluruh rakyat dalam kehidupan bermasyarakat, berbangsa, dan bernegara.`,
+          `SALAH. Terlalu sempit jika hanya diterapkan kepada sesama satu suku saja.`,
+          `SALAH. Hubungan sejawat hanya bagian kecil dari lingkup sosial yang lebih luas.`,
+          `SALAH. Lingkungan mahasiswa hanyalah salah satu segmen masyarakat.`
+        ]
+      },
+      {
+        m: 6, kb: 2, no: 7,
+        q: `Semboyan Bhinneka Tunggal Ika menggambarkan persatuan dan kesatuan, ini mengandung makna bahwa ....`,
+        opts: [
+          `dalam bergaul harus dapat menyesuaikan diri`,
+          `kebudayaan daerah harus terus dilestarikan`,
+          `dalam pergaulan tidak boleh membedakan suku`,
+          `kebudayaan masyarakat tidak tergantikan budaya lain`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Menyesuaikan diri bersifat umum dan belum menyentuh asas kesetaraan dalam keberagaman.`,
+          `SALAH. Pelestarian budaya daerah penting, tetapi penekanan persatuan dalam pergaulan Bhinneka Tunggal Ika adalah kesetaraan tanpa diskriminasi.`,
+          `BENAR. Bhinneka Tunggal Ika bermakna berbeda-beda tetapi tetap satu, sehingga dalam pergaulan sosial tidak boleh membeda-bedakan suku, agama, maupun ras.`,
+          `SALAH. Budaya tetap dinamis berakulturasi tanpa menghilangkan jati diri.`
+        ]
+      },
+      {
+        m: 6, kb: 2, no: 8,
+        q: `Ideologi Pancasila adalah ideologi terbuka, yang berarti ideologi yang ....`,
+        opts: [
+          `bersumber dari pemikiran kelompok yang berkuasa`,
+          `merupakan cita-cita suatu kelompok`,
+          `lahir dari nilai, cita-cita, dan budaya masyarakatnya`,
+          `dipaksakan dari luar`
+        ],
+        ans: 2,
+        exp: [
+          `SALAH. Ideologi yang dipaksakan penguasa adalah ciri ideologi tertutup.`,
+          `SALAH. Ideologi terbuka bukan milik satu golongan tertentu, melainkan milik seluruh bangsa.`,
+          `BENAR. Ideologi terbuka berasal dari nilai-nilai luhur, pandangan hidup, cita-cita, dan budaya masyarakat bangsa Indonesia sendiri.`,
+          `SALAH. Pancasila digali dari bumi Indonesia sendiri, bukan ideologi impor yang dipaksakan dari luar.`
+        ]
+      },
+      {
+        m: 6, kb: 2, no: 9,
+        q: `Hubungan negara dengan agama menurut Pancasila adalah sebagai berikut, kecuali ....`,
+        opts: [
+          `negara Indonesia adalah negara yang berdasarkan atas Ketuhanan Yang Maha Esa`,
+          `diberikannya tempat bagi penganut ateisme sebagai wujud kebebasan individu`,
+          `menghindari pertentangan agama baik inter maupun antarpemeluk agama`,
+          `memberikan toleransi terhadap orang lain yang sedang menjalani ibadah menurut agama yang dianutnya`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Sesuai Pasal 29 ayat (1) UUD 1945, negara berdasar atas Ketuhanan Yang Maha Esa.`,
+          `BENAR. Dalam negara Pancasila, paham anti-ketuhanan dan ateisme bertentangan dengan Sila pertama sehingga tidak diberi ruang ideologis di Indonesia.`,
+          `SALAH. Kerukunan inter dan antarumat beragama adalah kewajiban dalam negara Pancasila.`,
+          `SALAH. Toleransi antarumat beragama dijamin oleh Sila ke-1 dan Pasal 29 ayat (2) UUD 1945.`
+        ]
+      },
+      {
+        m: 6, kb: 2, no: 10,
+        q: `Bung Hatta memandang sila kedua memiliki konsekuensi ke dalam dan ke luar. Ke dalam artinya adalah ....`,
+        opts: [
+          `membangun bangsa tidak sekadar terlibat dan sibuk dalam pemerintahan dan birokrasi`,
+          `pedoman negara dalam memuliakan nilai-nilai kemanusiaan dan HAM`,
+          `masyarakat Indonesia perlu lebih selektif dalam menerima pengaruh global terhadap nilai kemanusiaan`,
+          `menjadi pedoman politik luar negeri bebas aktif`
+        ],
+        ans: 1,
+        exp: [
+          `SALAH. Pernyataan ini tidak merujuk pada pembagian konsekuensi ke dalam/ke luar sila kemanusiaan menurut Bung Hatta.`,
+          `BENAR. Konsekuensi ke dalam dari Sila ke-2 menurut pemikiran Bung Hatta berarti negara dan masyarakat wajib memuliakan martabat kemanusiaan, keadilan, dan HAM di dalam negeri.`,
+          `SALAH. Selektivitas pengaruh global lebih dekat pada fungsi filter budaya Pancasila.`,
+          `SALAH. Menjadi pedoman politik luar negeri bebas aktif dan menentang penjajahan dunia merupakan konsekuensi ke luar dari Sila ke-2.`
+        ]
+      }
+    ];
+
+    const LETTERS = [`A`, `B`, `C`, `D`, `E`];
+    const TOTAL_SECONDS = 90 * 60; // 90 menit
+
+    let state = {
+      answers: {}, // { questionIndex: optionIndex }
+      timeRemaining: TOTAL_SECONDS,
+      timerStarted: false,
+      finished: false,
+      muted: false,
+      filter: `all`
+    };
+
+    let timerInterval = null;
+    let audioCtx = null;
+    let tickToggle = false;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) audioCtx = new AudioCtx();
+      }
+      if (audioCtx && audioCtx.state === `suspended`) {
+        audioCtx.resume().catch(() => {});
+      }
+      return audioCtx;
+    }
+
+    // Sintesis suara detak jarum jam mekanik setiap detik via Web Audio API
+    function playClockTick() {
+      if (state.muted || state.finished || !state.timerStarted) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      try {
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+
+        // Selang-seling nada "tik" dan "tok" lembut seperti jarum detik jam analog
+        tickToggle = !tickToggle;
+        osc.type = `triangle`;
+        osc.frequency.setValueAtTime(tickToggle ? 1150 : 880, now);
+        osc.frequency.exponentialRampToValueAtTime(160, now + 0.032);
+
+        filter.type = `bandpass`;
+        filter.frequency.setValueAtTime(1200, now);
+        filter.Q.setValueAtTime(1.8, now);
+
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.linearRampToValueAtTime(0.16, now + 0.003);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.04);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.045);
+      } catch (e) {
+        // Abaikan jika browser memblokir sementara
+      }
+    }
+
+    function formatTime(secs) {
+      const s = Math.max(0, Math.floor(secs));
+      const m = Math.floor(s / 60);
+      const rem = s % 60;
+      return `${String(m).padStart(2, `0`)}:${String(rem).padStart(2, `0`)}`;
+    }
+
+    function updateTimerUI() {
+      const clockEl = document.getElementById(`timer-clock`);
+      const badgeEl = document.getElementById(`timer-badge`);
+      const progEl = document.getElementById(`timer-progress-text`);
+      const finishTopBtn = document.getElementById(`btn-finish-top`);
+      const finishBottomBtn = document.getElementById(`btn-finish-bottom`);
+
+      if (clockEl) clockEl.textContent = formatTime(state.timeRemaining);
+      const answeredCount = Object.keys(state.answers).length;
+      if (progEl) progEl.textContent = `${answeredCount}/${QUESTIONS.length} terjawab`;
+
+      if (badgeEl) {
+        badgeEl.classList.remove(`is-running`, `is-finished`, `is-warning`);
+        if (state.finished) {
+          badgeEl.textContent = `SELESAI`;
+          badgeEl.classList.add(`is-finished`);
+        } else if (state.timerStarted) {
+          if (state.timeRemaining <= 300) {
+            badgeEl.textContent = `WAKTU HAMPIR HABIS`;
+            badgeEl.classList.add(`is-warning`);
+          } else {
+            badgeEl.textContent = `BERJALAN`;
+            badgeEl.classList.add(`is-running`);
+          }
+        } else {
+          badgeEl.textContent = `SIAP`;
+        }
+      }
+
+      if (finishTopBtn) finishTopBtn.disabled = state.finished;
+      if (finishBottomBtn) finishBottomBtn.disabled = state.finished;
+    }
+
+    function updateProgressUI() {
+      const answeredCount = Object.keys(state.answers).length;
+      const pct = Math.round((answeredCount / QUESTIONS.length) * 100);
+      const labelEl = document.getElementById(`side-progress-label`);
+      const pctEl = document.getElementById(`side-progress-pct`);
+      const fillEl = document.getElementById(`side-progress-fill`);
+      if (labelEl) labelEl.textContent = `${answeredCount} dari ${QUESTIONS.length} soal`;
+      if (pctEl) pctEl.textContent = `${pct}%`;
+      if (fillEl) fillEl.style.width = `${pct}%`;
+
+      updateTimerUI();
+      renderNavGrid();
+    }
+
+    function startCountdown() {
+      if (state.timerStarted || state.finished) return;
+      state.timerStarted = true;
+      getAudioContext();
+      playClockTick();
+      updateTimerUI();
+
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (state.finished) {
+          stopCountdown();
+          return;
+        }
+        if (state.timeRemaining > 0) {
+          state.timeRemaining -= 1;
+          playClockTick();
+          updateTimerUI();
+          if (state.timeRemaining % 10 === 0) persistState();
+        }
+        if (state.timeRemaining <= 0) {
+          finishExam(true);
+        }
+      }, 1000);
+    }
+
+    function resumeCountdownIfNeeded() {
+      if (state.timerStarted && !state.finished && state.timeRemaining > 0 && !timerInterval) {
+        timerInterval = setInterval(() => {
+          if (state.finished) {
+            stopCountdown();
+            return;
+          }
+          if (state.timeRemaining > 0) {
+            state.timeRemaining -= 1;
+            playClockTick();
+            updateTimerUI();
+            if (state.timeRemaining % 10 === 0) persistState();
+          }
+          if (state.timeRemaining <= 0) {
+            finishExam(true);
+          }
+        }, 1000);
+      }
+    }
+
+    function stopCountdown() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function toggleSound() {
+      state.muted = !state.muted;
+      const iconEl = document.getElementById(`sound-icon`);
+      if (iconEl) iconEl.textContent = state.muted ? `🔇` : `🔊`;
+      if (!state.muted) getAudioContext();
+      persistState();
+    }
+
+    function selectAnswer(qIdx, optIdx) {
+      if (state.finished) return;
+      getAudioContext();
+
+      // Mulai timer otomatis saat pengguna mengklik jawaban pada soal pertama
+      // (dan juga mulai jika pengguna mengklik soal mana saja sebagai jawaban pertamanya)
+      if (!state.timerStarted && (qIdx === 0 || Object.keys(state.answers).length === 0)) {
+        startCountdown();
+      }
+
+      state.answers[qIdx] = optIdx;
+      renderQuestions();
+      updateProgressUI();
+      persistState();
+    }
+
+    function getCategory(pct) {
+      if (pct >= 90) return `Baik Sekali`;
+      if (pct >= 80) return `Baik (Lulus Modul)`;
+      if (pct >= 70) return `Cukup`;
+      return `Kurang (Perlu Mengulang)`;
+    }
+
+    function finishExam(autoExpired = false) {
+      if (state.finished) return;
+      state.finished = true;
+      stopCountdown();
+
+      updateTimerUI();
+      renderQuestions();
+      renderNavGrid();
+      renderResultSummary(autoExpired);
+      persistState();
+
+      const panel = document.getElementById(`result-panel`);
+      if (panel) {
+        panel.classList.add(`is-visible`);
+        panel.scrollIntoView({ behavior: `smooth`, block: `start` });
+      }
+    }
+
+    function renderResultSummary(autoExpired) {
+      let totalCorrect = 0;
+      const perMod = { 1: { ok: 0, n: 0 }, 2: { ok: 0, n: 0 }, 3: { ok: 0, n: 0 }, 4: { ok: 0, n: 0 }, 5: { ok: 0, n: 0 }, 6: { ok: 0, n: 0 } };
+
+      QUESTIONS.forEach((item, idx) => {
+        perMod[item.m].n += 1;
+        if (state.answers[idx] === item.ans) {
+          totalCorrect += 1;
+          perMod[item.m].ok += 1;
+        }
+      });
+
+      const answeredCount = Object.keys(state.answers).length;
+      const pct = Math.round((totalCorrect / QUESTIONS.length) * 100);
+      const elapsed = TOTAL_SECONDS - state.timeRemaining;
+
+      const tsEl = document.getElementById(`result-timestamp`);
+      const pctEl = document.getElementById(`res-percent`);
+      const predEl = document.getElementById(`res-predicate`);
+      const corrEl = document.getElementById(`res-correct`);
+      const ansEl = document.getElementById(`res-answered`);
+      const timeEl = document.getElementById(`res-time`);
+      const durEl = document.getElementById(`res-duration`);
+      const tbody = document.getElementById(`res-breakdown-body`);
+      const bTitle = document.getElementById(`bottom-status-title`);
+      const bDesc = document.getElementById(`bottom-status-desc`);
+
+      if (tsEl) tsEl.textContent = autoExpired ? `WAKTU HABIS · OTOMATIS SELESAI` : `TES SELESAI · KUNCI TERBUKA`;
+      if (pctEl) pctEl.textContent = `${pct}%`;
+      if (predEl) predEl.textContent = getCategory(pct);
+      if (corrEl) corrEl.textContent = `${totalCorrect} / ${QUESTIONS.length}`;
+      if (ansEl) ansEl.textContent = `${answeredCount} soal terjawab`;
+      if (timeEl) timeEl.textContent = formatTime(state.timeRemaining);
+      if (durEl) durEl.textContent = `Durasi pengerjaan: ${formatTime(elapsed)}`;
+
+      if (tbody) {
+        let rows = ``;
+        for (let m = 1; m <= 6; m++) {
+          const mpct = Math.round((perMod[m].ok / perMod[m].n) * 100);
+          rows += `<tr>
+            <td>Modul ${m}</td>
+            <td class="num">${perMod[m].ok}</td>
+            <td class="num">${perMod[m].n}</td>
+            <td class="num"><strong>${mpct}%</strong></td>
+            <td>${getCategory(mpct)}</td>
+          </tr>`;
+        }
+        tbody.innerHTML = rows;
+      }
+
+      if (bTitle) bTitle.textContent = `Evaluasi telah selesai (${pct}% penguasaan).`;
+      if (bDesc) bDesc.textContent = `Seluruh kunci jawaban dan pembahasan lengkap setiap opsi telah dibuka pada setiap soal di atas.`;
+    }
+
+    function handleReset(btn) {
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `Klik lagi untuk mengulang`;
+        setTimeout(() => {
+          if (btn && btn.dataset.armed === `true`) {
+            btn.dataset.armed = `false`;
+            btn.textContent = `Ulangi Tes`;
+          }
+        }, 4000);
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `Ulangi Tes`;
+
+      stopCountdown();
+      state.answers = {};
+      state.timeRemaining = TOTAL_SECONDS;
+      state.timerStarted = false;
+      state.finished = false;
+
+      const panel = document.getElementById(`result-panel`);
+      if (panel) panel.classList.remove(`is-visible`);
+      const bTitle = document.getElementById(`bottom-status-title`);
+      const bDesc = document.getElementById(`bottom-status-desc`);
+      if (bTitle) bTitle.textContent = `Siap mengakhiri tes?`;
+      if (bDesc) bDesc.textContent = `Tekan Selesai untuk menghentikan timer dan membuka seluruh kunci jawaban serta pembahasan opsi.`;
+
+      renderQuestions();
+      updateProgressUI();
+      persistState();
+      window.scrollTo({ top: 0, behavior: `smooth` });
+    }
+
+    function setModuleFilter(val) {
+      state.filter = val;
+      document.querySelectorAll(`.filter-btn`).forEach((b) => {
+        b.classList.toggle(`is-active`, b.dataset.filter === val);
+      });
+      renderQuestions();
+      persistState();
+    }
+
+    function jumpToQuestion(idx) {
+      if (state.filter !== `all` && String(QUESTIONS[idx].m) !== state.filter) {
+        setModuleFilter(`all`);
+      }
+      const card = document.getElementById(`q-card-${idx}`);
+      if (card) {
+        card.scrollIntoView({ behavior: `smooth`, block: `center` });
+      }
+    }
+
+    function renderNavGrid() {
+      const grid = document.getElementById(`nav-grid`);
+      if (!grid) return;
+      let html = ``;
+      QUESTIONS.forEach((item, idx) => {
+        const userAns = state.answers[idx];
+        let cls = `nav-dot`;
+        if (state.finished) {
+          if (userAns === item.ans) cls += ` is-correct`;
+          else if (userAns !== undefined) cls += ` is-wrong`;
+        } else if (userAns !== undefined) {
+          cls += ` is-answered`;
+        }
+        html += `<button type="button" class="${cls}" onclick="jumpToQuestion(${idx})" title="Modul ${item.m} TF ${item.kb} No. ${item.no}">${idx + 1}</button>`;
+      });
+      grid.innerHTML = html;
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById(`questions-container`);
+      if (!container) return;
+
+      let html = ``;
+      let currentMod = 0;
+
+      QUESTIONS.forEach((item, idx) => {
+        if (state.filter !== `all` && String(item.m) !== state.filter) return;
+
+        if (item.m !== currentMod) {
+          if (currentMod !== 0) html += `</section>`;
+          currentMod = item.m;
+          html += `<section class="module-section" aria-label="${MODULE_TITLES[currentMod]}">
+            <div class="module-head">
+              <h2 class="module-title">${MODULE_TITLES[currentMod]}</h2>
+              <span class="module-tag">Tes Formatif 1 &amp; 2</span>
+            </div>`;
+        }
+
+        const userAns = state.answers[idx];
+        let cardCls = `q-card`;
+        let statusBadge = ``;
+
+        if (state.finished) {
+          if (userAns === item.ans) {
+            cardCls += ` is-correct`;
+            statusBadge = `<span class="q-badge q-badge-correct">Benar</span>`;
+          } else if (userAns !== undefined) {
+            cardCls += ` is-wrong`;
+            statusBadge = `<span class="q-badge q-badge-wrong">Salah · Kunci ${LETTERS[item.ans]}</span>`;
+          } else {
+            cardCls += ` is-wrong`;
+            statusBadge = `<span class="q-badge q-badge-unanswered">Tidak Dijawab · Kunci ${LETTERS[item.ans]}</span>`;
+          }
+        } else {
+          if (userAns !== undefined) cardCls += ` is-answered`;
+          if (idx === 0 && !state.timerStarted) {
+            statusBadge = `<span class="q-badge q-badge-trigger">Pemicu Timer 90 Menit</span>`;
+          }
+        }
+
+        let optsHtml = ``;
+        item.opts.forEach((optText, oIdx) => {
+          let optCls = `opt-btn`;
+          if (state.finished) {
+            if (oIdx === item.ans) optCls += ` is-correct-opt`;
+            else if (oIdx === userAns) optCls += ` is-wrong-opt`;
+          } else if (oIdx === userAns) {
+            optCls += ` is-selected`;
+          }
+          const disAttr = state.finished ? `disabled` : ``;
+          optsHtml += `<button type="button" class="${optCls}" ${disAttr} onclick="selectAnswer(${idx}, ${oIdx})">
+            <span class="opt-letter">${LETTERS[oIdx]}.</span>
+            <span>${optText}</span>
+          </button>`;
+        });
+
+        // Kunci jawaban dan pembahasan lengkap SETIAP pilihan jawaban hanya dirender jika state.finished === true
+        let expHtml = ``;
+        if (state.finished) {
+          let expItems = ``;
+          item.opts.forEach((_, oIdx) => {
+            const isKey = oIdx === item.ans;
+            expItems += `<li class="exp-item${isKey ? ` is-key` : ``}">
+              <strong>${LETTERS[oIdx]}.</strong>${item.exp[oIdx]}
+            </li>`;
+          });
+          expHtml = `<div class="exp-box">
+            <div class="exp-header">Kunci Jawaban (${LETTERS[item.ans]}) &amp; Pembahasan Setiap Pilihan</div>
+            <ul class="exp-list">${expItems}</ul>
+          </div>`;
+        }
+
+        html += `<article id="q-card-${idx}" class="${cardCls}">
+          <div class="q-header">
+            <span class="q-index">Soal ${idx + 1} · Modul ${item.m} · Tes Formatif ${item.kb} (No. ${item.no})</span>
+            ${statusBadge}
+          </div>
+          <p class="q-stem">${item.q}</p>
+          <div class="options-list">${optsHtml}</div>
+          ${expHtml}
+        </article>`;
+      });
+
+      if (currentMod !== 0) html += `</section>`;
+      container.innerHTML = html;
+    }
+
+    async function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState({
+            answers: state.answers,
+            timeRemaining: state.timeRemaining,
+            timerStarted: state.timerStarted,
+            finished: state.finished,
+            muted: state.muted,
+            filter: state.filter
+          });
+        } catch (e) {
+          // Abaikan error penyimpanan sementara
+        }
+      }
+    }
+
+    async function initApp() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (saved.answers && typeof saved.answers === `object`) state.answers = saved.answers;
+            if (typeof saved.timeRemaining === `number`) state.timeRemaining = saved.timeRemaining;
+            if (typeof saved.timerStarted === `boolean`) state.timerStarted = saved.timerStarted;
+            if (typeof saved.finished === `boolean`) state.finished = saved.finished;
+            if (typeof saved.muted === `boolean`) state.muted = saved.muted;
+            if (typeof saved.filter === `string`) state.filter = saved.filter;
+          }
+        } catch (e) {
+          // Gunakan state awal jika gagal memuat
+        }
+      }
+
+      const iconEl = document.getElementById(`sound-icon`);
+      if (iconEl) iconEl.textContent = state.muted ? `🔇` : `🔊`;
+
+      document.querySelectorAll(`.filter-btn`).forEach((b) => {
+        b.classList.toggle(`is-active`, b.dataset.filter === state.filter);
+      });
+
+      renderQuestions();
+      updateProgressUI();
+
+      if (state.finished) {
+        renderResultSummary(state.timeRemaining <= 0);
+        const panel = document.getElementById(`result-panel`);
+        if (panel) panel.classList.add(`is-visible`);
+      } else if (state.timerStarted) {
+        resumeCountdownIfNeeded();
+      }
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    initApp();
+  </script>
+</body>
+</html>
